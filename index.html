@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Žákovský web ZŠ PhDr. J. S. Gutha-Jarkovského v Kostelci nad Orlicí. Informace, prázdniny, počitadlo známek, schránka důvěry a básničky pana školníka.">
+    <title>Žákovský web ZŠ Gutha Jarkovského | Kostelec nad Orlicí</title>
+
+    <!-- Nastavení tématu PŘED vykreslením stránky – zabrání probliknutí světlého módu -->
+    <script>
+        (function () {
+            try {
+                const saved = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = saved || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) { /* localStorage nedostupný – výchozí */ }
+        })();
+    </script>
+
+    <!-- Chytré vyhledání loga na disku bez připojování k internetu -->
+    <script>
+        function tryOtherNames(img) {
+            if (!img.dataset.tried1) {
+                img.dataset.tried1 = 'true';
+                img.src = 'logo.png';
+            } else if (!img.dataset.tried2) {
+                img.dataset.tried2 = 'true';
+                img.src = 'logo.jpg';
+            } else if (!img.dataset.tried3) {
+                img.dataset.tried3 = 'true';
+                img.src = 'logo';
+            } else if (!img.dataset.tried4) {
+                img.dataset.tried4 = 'true';
+                img.src = 'logo.png.png';
+            } else {
+                img.onerror = null;
+                // Vnitřní SVG záloha loga (funguje 100% offline)
+                img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ea580c'/><path d='M50 20 L80 40 L80 75 L20 75 L20 40 Z' fill='none' stroke='%23ffffff' stroke-width='6'/><path d='M35 75 L35 50 L65 50 L65 75' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>";
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --brand-orange: #ea580c;        
+            --brand-orange-hover: #c2410c;  
+            --brand-orange-soft: #fff7ed;   
+            
+            --brand-green: #15803d;         
+            --brand-green-hover: #166534;   
+            --brand-green-soft: #f0fdf4;    
+            
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 6px 16px -4px rgba(15, 23, 42, 0.12);
+            --shadow-lg: 0 12px 28px -8px rgba(15, 23, 42, 0.16);
+            --shadow-hover: 0 12px 26px -6px rgba(234, 88, 12, 0.22);
+            
+            --transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* DARK MODE */
+        html[data-theme="dark"] {
+            --bg-main: #0b1120;
+            --bg-card: #1e293b;
+            --text-dark: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --brand-orange-soft: #381507;
+            --brand-green-soft: #052e16;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 6px 16px -4px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 12px 28px -8px rgba(0, 0, 0, 0.6);
+            --shadow-hover: 0 12px 26px -6px rgba(234, 88, 12, 0.35);
+        }
+
+        html[data-theme="dark"] header,
+        html[data-theme="dark"] .search-banner,
+        html[data-theme="dark"] .calculator-box,
+        html[data-theme="dark"] .meteo-card,
+        html[data-theme="dark"] .modal-content {
+            background: var(--bg-card);
+        }
+
+        html[data-theme="dark"] .form-group input,
+        html[data-theme="dark"] .form-group select,
+        html[data-theme="dark"] .form-group textarea,
+        html[data-theme="dark"] .search-banner input {
+            background: #0f172a;
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        html[data-theme="dark"] .search-banner input::placeholder {
+            color: #64748b;
+        }
+
+        html[data-theme="dark"] .top-bar-info span,
+        html[data-theme="dark"] .top-bar-links a { color: #ffffff; }
+
+        html[data-theme="dark"] .student-badge { background: #052e16; color: #86efac; border-color: #16a34a; }
+        html[data-theme="dark"] .island-dropdown { background: #090d16; border-color: var(--border-color); }
+        html[data-theme="dark"] .holiday-table tbody tr:hover { background: #26334d; }
+        html[data-theme="dark"] .media-embed-box { color: #e2e8f0; background: #0f172a; }
+        html[data-theme="dark"] .grade-chip button { color: #fff; }
+        html[data-theme="dark"] body.is-admin .editable:hover { background-color: #381507; }
+
+        .school-logo-icon {
+            background: #ffffff !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg-main); 
+            color: var(--text-dark); 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-container { flex: 1; }
+
+        /* PŘEPÍNAČ TÉMATU */
+        .theme-toggle {
+            background: var(--brand-orange-soft);
+            border: 2px solid var(--brand-orange);
+            border-radius: 30px;
+            width: 44px; height: 44px;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .theme-toggle:hover { 
+            transform: scale(1.08) rotate(10deg); 
+            border-color: #c2410c; 
+        }
+
+        /* ÚVODNÍ ANIMACE */
+        #introOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: #ffffff;
+            z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            cursor: pointer;
+        }
+
+        html[data-theme="dark"] #introOverlay {
+            background: #0f172a;
+        }
+
+        #introLogo {
+            width: 160px; height: 160px;
+            object-fit: contain;
+            transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.4s ease;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .intro-hint {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse { from { opacity: 0.4; } to { opacity: 0.9; } }
+
+        body.intro-running { overflow: hidden; }
+        body.intro-running .top-bar,
+        body.intro-running header,
+        body.intro-running nav,
+        body.intro-running .main-container,
+        body.intro-running footer { opacity: 0; transform: translateY(15px); }
+
+        body.intro-complete .top-bar,
+        body.intro-complete header,
+        body.intro-complete nav,
+        body.intro-complete .main-container,
+        body.intro-complete footer { 
+            animation: lightUpReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+        }
+
+        @keyframes lightUpReveal {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ADMIN BAR */
+        #adminBar {
+            display: none;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem; font-size: 0.9rem; font-weight: 600;
+            justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1050;
+            border-bottom: 2px solid var(--brand-orange);
+            box-shadow: var(--shadow-md); flex-wrap: wrap; gap: 0.5rem;
+        }
+        .admin-controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .admin-btn { 
+            background: #ffffff; color: var(--brand-orange); border: none; 
+            padding: 0.45rem 1rem; border-radius: var(--radius-sm); 
+            cursor: pointer; font-weight: 700; transition: var(--transition); 
+            font-size: 0.85rem;
+        }
+        .admin-btn:hover { transform: translateY(-1px); background: #fff7ed; }
+
+        .admin-delete-btn, .admin-add-btn { display: none; }
+        body.is-admin .admin-delete-btn { 
+            display: inline-flex; align-items: center; gap: 4px; 
+            background: #ef4444; color: #ffffff; border: none; 
+            padding: 0.3rem 0.7rem; border-radius: 4px; font-size: 0.75rem; 
+            font-weight: 700; cursor: pointer; margin-top: 0.8rem; 
+        }
+        body.is-admin .admin-delete-btn:hover { background: #dc2626; }
+        body.is-admin .admin-add-btn { 
+            display: inline-flex; align-items: center; gap: 6px; 
+            background: var(--brand-orange); color: #ffffff; border: none; 
+            padding: 0.6rem 1.2rem; border-radius: var(--radius-sm); 
+            font-weight: 700; cursor: pointer; margin-bottom: 1.5rem; 
+        }
+
+        .modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); 
+            z-index: 2000; justify-content: center; align-items: center; padding: 1rem;
+        }
+        .modal-content { 
+            background: #ffffff; padding: 2.2rem; border-radius: var(--radius-lg); 
+            max-width: 420px; width: 100%; box-shadow: var(--shadow-lg); 
+            border-top: 5px solid #ea580c; 
+        }
+
+        body.is-admin .editable { 
+            outline: 2px dashed var(--brand-orange); 
+            outline-offset: 3px; cursor: text; border-radius: 4px; 
+        }
+        body.is-admin .editable:hover { background-color: var(--brand-orange-soft); }
+
+        /* TOP BAR */
+        .top-bar { 
+            background-color: var(--brand-orange); color: #ffffff; 
+            font-size: 0.85rem; padding: 0.6rem 1.5rem; 
+            border-bottom: 2px solid var(--brand-green); 
+        }
+        .top-bar-container { 
+            max-width: 1240px; margin: 0 auto; 
+            display: flex; justify-content: space-between; align-items: center; 
+            flex-wrap: wrap; gap: 0.8rem; 
+        }
+        .top-bar-info { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+        .top-bar-links { display: flex; gap: 1.2rem; }
+        .top-bar-links a { 
+            color: #ffffff; text-decoration: none; font-weight: 600; 
+            transition: var(--transition); opacity: 0.95;
+        }
+        .top-bar-links a:hover { opacity: 1; text-decoration: underline; }
+
+        /* HEADER */
+        header { 
+            background: #ffffff; border-bottom: 1px solid var(--border-color); 
+            box-shadow: var(--shadow-sm); 
+        }
+        .header-container { 
+            max-width: 1240px; margin: 0 auto; padding: 1rem 1.5rem; 
+            display: flex; justify-content: space-between; align-items: center; 
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .school-brand { 
+            display: flex; align-items: center; gap: 1rem; 
+            text-decoration: none; color: inherit; cursor: pointer; 
+            user-select: none;
+        }
+        .school-logo-icon { 
+            width: 58px; height: 58px; border-radius: var(--radius-md); 
+            display: flex; align-items: center; justify-content: center; 
+            overflow: hidden; border: 2px solid var(--brand-orange); 
+            flex-shrink: 0;
+        }
+        .school-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .school-title h1 { 
+            font-size: 1.45rem; color: var(--brand-orange); font-weight: 800; 
+            text-transform: uppercase; line-height: 1.2; 
+        }
+        .school-title p { 
+            font-size: 0.82rem; color: var(--brand-green); font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 0.5px; 
+        }
+
+        .student-badge { 
+            background: var(--brand-orange-soft); color: var(--brand-orange); 
+            border: 1px solid var(--brand-orange); font-weight: 700; font-size: 0.8rem; 
+            padding: 0.5rem 1rem; border-radius: 30px; text-transform: uppercase; 
+            cursor: pointer; transition: var(--transition); white-space: nowrap;
+        }
+        .student-badge:hover { transform: translateY(-2px); }
+
+        /* NAVIGACE */
+        nav { 
+            background-color: var(--brand-orange); position: sticky; top: 0; 
+            z-index: 1000; box-shadow: var(--shadow-md); border-bottom: 3px solid var(--brand-green); 
+        }
+        .nav-wrapper { 
+            max-width: 1240px; margin: 0 auto; display: flex; 
+            align-items: center; justify-content: space-between; gap: 0.5rem;
+            padding: 0 0.5rem;
+        }
+        .nav-container { 
+            display: flex; list-style: none; overflow-x: auto; 
+            align-items: center; scrollbar-width: none; 
+        }
+        .nav-container::-webkit-scrollbar { display: none; }
+        .nav-container li a { 
+            display: flex; align-items: center; gap: 6px; 
+            padding: 0.95rem 1.05rem; color: rgba(255,255,255,0.92); 
+            text-decoration: none; font-weight: 600; font-size: 0.9rem; 
+            white-space: nowrap; cursor: pointer; transition: var(--transition);
+        }
+        .nav-container li a:hover, 
+        .nav-container li a.active { 
+            color: #ffffff; background: #c2410c; 
+        }
+
+        /* DYNAMIC ISLAND (ODPOČET PRÁZDNIN) */
+        .dynamic-island { 
+            position: relative; background: rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.35); 
+            padding: 0.45rem 1.1rem; border-radius: 30px; color: #ffffff; 
+            font-size: 0.82rem; font-weight: 600; display: flex; 
+            align-items: center; gap: 8px; white-space: nowrap; 
+            cursor: pointer; flex-shrink: 0; transition: var(--transition);
+        }
+        .dynamic-island:hover { background: rgba(0, 0, 0, 0.65); border-color: #86efac; }
+        .dynamic-island .main-countdown span { color: #86efac; font-weight: 700; }
+        
+        .island-dropdown { 
+            position: absolute; top: calc(100% + 10px); right: 0; 
+            background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.2); 
+            border-radius: var(--radius-md); padding: 1.2rem; width: 330px; 
+            box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; 
+            transition: all 0.25s ease; color: #fff; pointer-events: none; z-index: 1010;
+        }
+        .dynamic-island:hover .island-dropdown,
+        .dynamic-island:focus-within .island-dropdown { 
+            opacity: 1; visibility: visible; pointer-events: auto; 
+        }
+        .island-holiday-item { 
+            display: flex; flex-direction: column; font-size: 0.82rem; 
+            margin-bottom: 0.65rem; padding-bottom: 0.5rem; 
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.12); 
+        }
+        .island-holiday-item:last-child { margin-bottom: 0; padding-bottom: 0; border: none; }
+
+        /* HLAVNÍ OBSAH */
+        .main-container { max-width: 1240px; margin: 2rem auto; padding: 0 1.5rem; width: 100%; }
+        
+        /* SEARCH BANNER */
+        .search-banner { 
+            background: var(--bg-card); border: 2px solid var(--border-color); 
+            padding: 0.8rem 1.2rem; border-radius: var(--radius-md); 
+            margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; 
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .search-banner:focus-within { border-color: var(--brand-orange); box-shadow: var(--shadow-md); }
+        .search-banner input { 
+            flex-grow: 1; border: none; font-size: 0.95rem; outline: none; 
+            font-family: inherit; background: transparent; color: inherit; 
+        }
+
+        /* WELCOME HERO */
+        .welcome-panel { 
+            background: linear-gradient(125deg, #f97316 0%, #ea580c 50%, #15803d 100%); 
+            color: #ffffff; padding: 2.5rem 2.2rem; border-radius: var(--radius-lg); 
+            margin-bottom: 2.5rem; box-shadow: var(--shadow-md); 
+        }
+        .welcome-panel h2 { font-size: 1.85rem; margin-bottom: 0.8rem; font-weight: 800; letter-spacing: -0.5px; }
+        .welcome-panel p { color: rgba(255,255,255,0.95); font-size: 1rem; max-width: 800px; }
+        .section-title { font-size: 1.45rem; color: var(--brand-orange); margin-bottom: 1.5rem; font-weight: 800; }
+
+        /* KARTY ROZCESTNÍKU */
+        .grid-cards { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 1.5rem; margin-bottom: 2.5rem; 
+        }
+        .card { 
+            background: var(--bg-card); border-radius: var(--radius-md); 
+            border: 1px solid var(--border-color); padding: 1.6rem; 
+            display: flex; flex-direction: column; justify-content: space-between; 
+            transition: var(--transition); box-shadow: var(--shadow-sm);
+        }
+        .card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: var(--shadow-hover); 
+            border-color: var(--brand-orange); 
+        }
+        .card-header-icon { 
+            width: 48px; height: 48px; background: var(--brand-orange-soft); 
+            color: var(--brand-orange); border-radius: var(--radius-sm); 
+            display: flex; align-items: center; justify-content: center; 
+            margin-bottom: 1.1rem; font-size: 1.5rem; 
+        }
+        .card h3 { font-size: 1.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        .card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem; }
+
+        /* TLAČÍTKA */
+        .btn-link { 
+            display: inline-flex; align-items: center; gap: 8px; 
+            background-color: var(--brand-orange); color: #ffffff !important; 
+            text-decoration: none; padding: 0.65rem 1.2rem; border-radius: var(--radius-sm); 
+            font-weight: 700; font-size: 0.88rem; border: none; cursor: pointer; 
+            transition: var(--transition); width: fit-content; user-select: none;
+        }
+        .btn-link:hover { background-color: #c2410c; transform: translateY(-2px); }
+        .btn-link:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-secondary { background: var(--text-muted); }
+        .btn-secondary:hover { background: #334155; }
+
+        /* KALKULAČKA & FORMULÁŘE */
+        .calculator-box { 
+            background: var(--bg-card); padding: 2.2rem; border-radius: var(--radius-md); 
+            border: 1px solid var(--border-color); max-width: 620px; margin: 0 auto; 
+            box-shadow: var(--shadow-sm);
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { 
+            display: block; font-weight: 700; font-size: 0.88rem; 
+            margin-bottom: 0.4rem; color: var(--brand-orange); 
+        }
+        .form-group input, .form-group select, .form-group textarea { 
+            width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border-color); 
+            border-radius: var(--radius-sm); font-family: inherit; font-size: 0.95rem; 
+            background: #ffffff; color: var(--text-dark); transition: var(--transition);
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--brand-orange); 
+            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+        }
+
+        .grades-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.2rem 0; min-height: 28px; }
+        .grade-chip { 
+            background: var(--brand-orange); color: white; padding: 0.4rem 0.9rem; 
+            border-radius: 20px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; 
+            font-weight: 600;
+        }
+        .grade-chip button { 
+            background: none; border: none; color: #fff; cursor: pointer; 
+            font-weight: bold; font-size: 1.1rem; line-height: 1; padding: 0 2px;
+        }
+        .result-display { 
+            font-size: 1.25rem; font-weight: 800; color: #ffffff; 
+            margin-top: 1.2rem; padding: 1.1rem; background: var(--brand-orange); 
+            border-radius: var(--radius-sm); text-align: center; letter-spacing: 0.3px;
+        }
+
+        /* BÁSNIČKY */
+        .poems-wrapper { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); 
+            gap: 1.6rem; 
+        }
+        .poem-card { 
+            background: var(--bg-card); border: 1px solid var(--border-color); 
+            border-radius: var(--radius-md); padding: 1.6rem; box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .poem-date { font-size: 0.82rem; font-weight: 700; color: var(--brand-orange); margin-bottom: 0.4rem; }
+        .poem-card h4 { font-size: 1.15rem; margin-bottom: 0.6rem; color: var(--text-dark); }
+        .poem-text { white-space: pre-line; font-style: italic; color: var(--text-muted); line-height: 1.7; font-size: 0.94rem; }
+
+        /* METEOSTANICE */
+        .meteo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem; }
+        .meteo-card { 
+            background: var(--bg-card); border: 1px solid var(--border-color); 
+            border-radius: var(--radius-md); padding: 1.5rem; text-align: center; 
+            box-shadow: var(--shadow-sm);
+        }
+        .meteo-card h4 { font-size: 0.95rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .meteo-value { font-size: 2.2rem; font-weight: 800; color: var(--brand-orange); margin: 0.3rem 0; }
+
+        /* MULTIMÉDIA */
+        .media-embed-box { 
+            background: #0f172a; color: #fff; border-radius: var(--radius-md); 
+            aspect-ratio: 16/9; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; border: 1px solid var(--border-color); 
+            padding: 2rem; text-align: center; gap: 0.8rem; box-shadow: var(--shadow-md);
+        }
+        .media-badge { 
+            background: #ef4444; color: white; font-size: 0.75rem; 
+            padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: 700; 
+            display: inline-flex; align-items: center; gap: 4px; 
+        }
+
+        /* TABULKY */
+        .holiday-table { width: 100%; border-collapse: collapse; margin-top: 1.2rem; background: var(--bg-card); border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .holiday-table th, .holiday-table td { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+        .holiday-table th { background: var(--brand-orange); color: #ffffff; font-weight: 700; }
+        .holiday-table tbody tr:hover { background: var(--brand-orange-soft); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: tabFadeIn 0.3s ease; }
+
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* FOOTER */
+        footer { 
+            background-color: var(--brand-orange); color: #ffffff; 
+            margin-top: 4rem; padding: 2.5rem 1.5rem; 
+            border-top: 6px solid var(--brand-green); text-align: center; 
+        }
+        footer p { margin-bottom: 0.5rem; }
+        footer a { color: #ffffff; font-weight: 700; text-decoration: underline; }
+
+        /* RESPONZIVITA */
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; align-items: flex-start; }
+            .top-bar-container { flex-direction: column; align-items: flex-start; }
+            .welcome-panel { padding: 1.8rem 1.4rem; }
+            .welcome-panel h2 { font-size: 1.5rem; }
+            .school-title h1 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body class="intro-running">
+
+    <!-- INTRO OVERLAY -->
+    <div id="introOverlay" onclick="skipIntro()" title="Kliknutím přeskočíte animaci">
+        <img id="introLogo" src="logo.png" alt="ZŠ PhDr. J. S. Gutha-Jarkovského" onerror="tryOtherNames(this)">
+        <span class="intro-hint">Kliknutím přeskočíte úvod</span>
+    </div>
+
+    <!-- ADMIN STRIP -->
+    <div id="adminBar">
+        <span>⚙️ <strong>Aktivní Administrace:</strong> Klikněte na jakýkoliv text na stránce pro jeho úpravu.</span>
+        <div class="admin-controls">
+            <button class="admin-btn" onclick="saveEdits()">💾 Uložit změny</button>
+            <button class="admin-btn" onclick="resetEdits()" style="color:#b91c1c;">🔄 Obnovit výchozí</button>
+            <button class="admin-btn" onclick="logoutAdmin()">Zavřít administraci</button>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+        <div class="modal-content">
+            <h3 id="adminModalTitle" style="color: var(--brand-orange); margin-bottom: 1rem; font-size: 1.3rem;">Přihlášení správce</h3>
+            <div class="form-group">
+                <label for="adminPassword">Kód přístupu:</label>
+                <input type="password" id="adminPassword" placeholder="Zadejte heslo správce..." onkeyup="if(event.key==='Enter') verifyAdmin()">
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn-link" onclick="verifyAdmin()">Potvrdit</button>
+                <button class="btn-link btn-secondary" onclick="closeModal()">Zrušit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HORNÍ LIŠTA -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-info">
+                <span>📍 Palackého nám. 45, Kostelec n. O.</span>
+                <span>📞 +420 775 598 553</span>
+            </div>
+            <div class="top-bar-links">
+                <a href="https://www.zskostelec.cz" target="_blank" rel="noopener noreferrer">Oficiální web školy</a>
+                <a href="https://zsgjkno.edupage.org/" target="_blank" rel="noopener noreferrer">EduPage & Obědy</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HLAVIČKA -->
+    <header>
+        <div class="header-container">
+            <div class="school-brand" onclick="switchSection('uvod')" role="button" tabindex="0" onkeyup="if(event.key==='Enter') switchSection('uvod')">
+                <div class="school-logo-icon" id="headerLogoSlot">
+                    <!-- Zde přistane logo po úvodní animaci -->
+                </div>
+                <div class="school-title">
+                    <h1 id="txt_main_header_title">žákovský web zš gutha jarkovského</h1>
+                    <p id="txt_main_header_sub">Kostelec nad Orlicí</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Přepnout tmavý / světlý režim" aria-label="Přepnout motiv">🌙</button>
+                <div class="student-badge" onclick="openLoginModal()" role="button" tabindex="0" onkeyup="if(event.key==='Enter') openLoginModal()">✨ Žákovský Portál</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGACE S PŘÍMÝMI ODKAZY NA VŠECHNY SEKCE -->
+    <nav>
+        <div class="nav-wrapper">
+            <ul class="nav-container" id="mainNav">
+                <li><a class="active" data-section="uvod" onclick="switchSection('uvod')">🏠 Přehled</a></li>
+                <li><a data-section="prazdniny" onclick="switchSection('prazdniny')">☀️ Prázdniny</a></li>
+                <li><a data-section="kalkulacka" onclick="switchSection('kalkulacka')">🧮 Počitadlo</a></li>
+                <li><a data-section="skolni-tv" onclick="switchSection('skolni-tv')">📺 Školní TV</a></li>
+                <li><a data-section="ptaci-budka" onclick="switchSection('ptaci-budka')">🐦 Ptačí budka</a></li>
+                <li><a data-section="skolni-meteostanice" onclick="switchSection('skolni-meteostanice')">🌤️ Meteostanice</a></li>
+                <li><a data-section="basnicky" onclick="switchSection('basnicky')">🪶 Básničky</a></li>
+                <li><a data-section="schranka" onclick="switchSection('schranka')">📬 Schránka</a></li>
+                <li><a data-section="parlament" onclick="switchSection('parlament')">🏛️ Parlament</a></li>
+            </ul>
+            
+            <!-- DYNAMIC ISLAND S ODPOČTEM PRÁZDNIN -->
+            <div class="dynamic-island" id="dynamicIsland" onclick="switchSection('prazdniny')" title="Klikněte pro zobrazení kalendáře prázdnin">
+                <div class="main-countdown">⏳ <span id="navCountdownText">Načítání...</span></div>
+                <div class="island-dropdown" id="islandDropdown" onclick="event.stopPropagation()"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HLAVNÍ OBSAH -->
+    <div class="main-container">
+
+        <!-- VYHLEDÁVÁNÍ -->
+        <div class="search-banner">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="Vyhledávejte na žákovském webu (prázdniny, básničky, zástupci parlamentu...)" oninput="handleSearchInput(event)">
+        </div>
+
+        <!-- TAB: ÚVOD -->
+        <div id="uvod" class="tab-content active">
+            <div class="welcome-panel">
+                <h2>Vítejte na Žákovském webu ZŠ Gutha Jarkovského</h2>
+                <p>Váš studentský portál s přehledem Školní TV, živou kamerou z ptačí budky, básničkami pana školníka, schránkou důvěry a termíny prázdnin.</p>
+            </div>
+
+            <h3 class="section-title">Rychlý rozcestník služeb</h3>
+            <button class="admin-add-btn" onclick="addNewOverviewCard()">➕ Přidat novou kartu</button>
+
+            <div class="grid-cards" id="overviewGrid">
+                <div class="card searchable-item" data-keywords="prázdniny volno svátky termíny podzimní vánoční pololetní jarní velikonoční">
+                    <div>
+                        <div class="card-header-icon">☀️</div>
+                        <h3>Prázdniny</h3>
+                        <p>Přehled prázdnin, svátků a zbývajících dní ve školním roce 2026/2027.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('prazdniny')">Zobrazit prázdniny</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="počitadlo průměr známky kalkulačka vážený vysvědčení">
+                    <div>
+                        <div class="card-header-icon">🧮</div>
+                        <h3>Počitadlo průměru</h3>
+                        <p>Spočítej si vážený průměr svých známek s uložením do paměti.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('kalkulacka')">Otevřít počitadlo</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="školní tv televize vysílání video reportáže">
+                    <div>
+                        <div class="card-header-icon">📺</div>
+                        <h3>Školní TV</h3>
+                        <p>Vysílání Školní televize a reportáže z akcí školy.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('skolni-tv')">Spustit vysílání</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="ptačí budka kamera live živě hnízdění přenos ptáci zahrada">
+                    <div>
+                        <div class="card-header-icon">🐦</div>
+                        <h3>Ptačí budka</h3>
+                        <p>Živý online přenos ze školní ptačí budky 24 hodin denně.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('ptaci-budka')">Sledovat kameru</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="meteostanice počasí teplota vlhkost vítr senzor střecha">
+                    <div>
+                        <div class="card-header-icon">🌤️</div>
+                        <h3>Meteostanice</h3>
+                        <p>Aktuální meteorologická data přímo ze střechy školy.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('skolni-meteostanice')">Zobrazit počasí</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="básničky básně školník rýmy humor poezie">
+                    <div>
+                        <div class="card-header-icon">🪶</div>
+                        <h3>Básničky</h3>
+                        <p>Unikátní sbírka básniček a rýmovaček pana školníka ze školních chodeb.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('basnicky')">Číst básničky</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="schránka důvěry anonymní vzkaz podnět stížnost pochvala discord">
+                    <div>
+                        <div class="card-header-icon">📬</div>
+                        <h3>Schránka důvěry</h3>
+                        <p>Anonymní vzkazy, podněty a nápady doručované přímo školnímu parlamentu.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('schranka')">Napsat vzkaz</button>
+                </div>
+
+                <div class="card searchable-item" data-keywords="parlament žákovské zastupitelstvo zástupci tříd třída předseda">
+                    <div>
+                        <div class="card-header-icon">🏛️</div>
+                        <h3>Školní parlament</h3>
+                        <p>Seznam zástupců jednotlivých tříd a činnost žákovské samosprávy.</p>
+                    </div>
+                    <button class="btn-link" onclick="switchSection('parlament')">Zobrazit zástupce</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: PRÁZDNINY -->
+        <div id="prazdniny" class="tab-content">
+            <h3 class="section-title">☀️ Přehled prázdnin a svátků 2026/2027</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.2rem;">Oficiální harmonogram školního roku stanovený MŠMT pro okres Rychnov nad Kněžnou.</p>
+            <table class="holiday-table">
+                <thead><tr><th>Událost</th><th>Termín</th><th>Délka / Dny</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Podzimní prázdniny</strong></td><td>29. října – 30. října 2026</td><td>čtvrtek – pátek</td></tr>
+                    <tr><td><strong>Vánoční prázdniny</strong></td><td>23. prosince 2026 – 3. ledna 2027</td><td>středa – neděle</td></tr>
+                    <tr><td><strong>Pololetní prázdniny</strong></td><td>29. ledna 2027</td><td>pátek</td></tr>
+                    <tr><td><strong>Jarní prázdniny</strong></td><td>8. února – 14. února 2027</td><td>pondělí – neděle</td></tr>
+                    <tr><td><strong>Velikonoční prázdniny</strong></td><td>25. března 2027</td><td>čtvrtek</td></tr>
+                    <tr><td><strong>Hlavní letní prázdniny</strong></td><td>1. července – 31. srpna 2027</td><td>čtvrtek – úterý</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB: POČITADLO PRŮMĚRU -->
+        <div id="kalkulacka" class="tab-content">
+            <h3 class="section-title">🧮 Počitadlo váženého průměru známek</h3>
+            <div class="calculator-box">
+                <p style="color: var(--text-muted); margin-bottom: 1.2rem; font-size: 0.92rem;">
+                    Zadejte známku (1–5) a její váhu (např. 1 pro pětiminutovku, 10 pro čtvrtletní písemku). Známky se automaticky ukládají do tvého prohlížeče.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="gradeInput">Známka (1–5):</label>
+                        <input type="number" id="gradeInput" min="1" max="5" placeholder="např. 1" onkeydown="if(event.key==='Enter') addGrade()">
+                    </div>
+                    <div class="form-group">
+                        <label for="weightInput">Váha známky (1–10):</label>
+                        <input type="number" id="weightInput" min="1" max="10" value="1" placeholder="Váha (výchozí 1)" onkeydown="if(event.key==='Enter') addGrade()">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn-link" onclick="addGrade()">➕ Přidat známku</button>
+                    <button class="btn-link btn-secondary" onclick="clearAllGrades()">🗑️ Vymazat vše</button>
+                </div>
+
+                <div class="grades-list" id="gradesList"></div>
+                <div class="result-display" id="resultDisplay">Vážený průměr: —</div>
+            </div>
+        </div>
+
+        <!-- TAB: ŠKOLNÍ TV -->
+        <div id="skolni-tv" class="tab-content">
+            <h3 class="section-title">📺 Školní Televize</h3>
+            <div class="media-embed-box">
+                <span class="media-badge">🔴 ŠKOLNÍ VYSÍLÁNÍ</span>
+                <h4 style="font-size: 1.3rem;">Vysílání a videoarchiv Školní TV</h4>
+                <p style="color: #cbd5e1; max-width: 550px; font-size: 0.95rem;">
+                    Reportáže z akcí naší školy, rozhovory s učiteli a žákovské projekty.
+                </p>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="btn-link" style="margin-top: 0.5rem;">
+                    ▶ Otevřít videoarchiv školy
+                </a>
+            </div>
+        </div>
+
+        <!-- TAB: PTAČÍ BUDKA -->
+        <div id="ptaci-budka" class="tab-content">
+            <h3 class="section-title">🐦 Živý přenos z ptačí budky 24/7</h3>
+            <div class="media-embed-box">
+                <span class="media-badge">🟢 ONLINE KAMERA</span>
+                <h4 style="font-size: 1.3rem;">Živý stream hnízdění</h4>
+                <p style="color: #cbd5e1; max-width: 580px; font-size: 0.95rem;">
+                    Kamera je umístěna v ptačí budce před budovou Komenského. Byla zprovozněna v roce 2026 v rámci projektu Rekonstrukce školní zahrady (IROP).
+                </p>
+                <button class="btn-link" onclick="alert('Stream se načítá v nejvyšší dostupné kvalitě.')">🔄 Obnovit stream</button>
+            </div>
+        </div>
+
+        <!-- TAB: METEOSTANICE -->
+        <div id="skolni-meteostanice" class="tab-content">
+            <h3 class="section-title">🌤️ Meteorologická stanice ZŠ</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.2rem;">Měření v reálném čase ze senzorové jednotky na střeše budovy Palackého náměstí.</p>
+            <div class="meteo-grid">
+                <div class="meteo-card">
+                    <h4>🌡️ Teplota vzduchu</h4>
+                    <div class="meteo-value" id="meteoTemp">21.5 °C</div>
+                    <small style="color: var(--text-muted);">Pocitová: 20.8 °C</small>
+                </div>
+                <div class="meteo-card">
+                    <h4>💧 Relativní vlhkost</h4>
+                    <div class="meteo-value" id="meteoHumidity">54 %</div>
+                    <small style="color: var(--text-muted);">Rosný bod: 11.2 °C</small>
+                </div>
+                <div class="meteo-card">
+                    <h4>💨 Rychlost větru</h4>
+                    <div class="meteo-value" id="meteoWind">12 km/h</div>
+                    <small style="color: var(--text-muted);">Směr: Jihozápadní</small>
+                </div>
+                <div class="meteo-card">
+                    <h4>⏱️ Tlak vzduchu</h4>
+                    <div class="meteo-value">1018 hPa</div>
+                    <small style="color: var(--text-muted);">Stabilní tendence</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: BÁSNIČKY -->
+        <div id="basnicky" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <h3 class="section-title" style="margin-bottom: 0;">🪶 Básničky pana školníka</h3>
+                <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Celkem 22 básniček</span>
+            </div>
+
+            <div class="poems-wrapper" id="poemsGrid">
+
+                <div class="poem-card searchable-item" id="poem_1">
+                    <div>
+                        <div class="poem-date">📅 9. 9. 2019</div>
+                        <h4>Prázdniny utekly jak voda</h4>
+                        <div class="poem-text">Prázdniny utekly jak voda,
+sílu a energii,
+v novém školním roce vám dodá
+ovoce do škol v tekutém stavu
+frutík jablečný vám dnes vylepší stravu.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_1')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_2">
+                    <div>
+                        <div class="poem-date">📅 13. 9. 2019</div>
+                        <h4>Jablko a čtyři švestky</h4>
+                        <div class="poem-text">Jablko a čtyři švestky,
+Podzim bude nebývale hezký.
+Dobrá by byla hruštička
+a v žákovské jednička,
+to bychom však chtěli moc,
+ještě tři měsíce zbývají do vánoc
+a do zimy studené,
+stejně vím že by jste si radši dali,
+moravské uzené.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_2')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_3">
+                    <div>
+                        <div class="poem-date">📅 19. 9. 2019</div>
+                        <h4>Jistě všichni oceníte</h4>
+                        <div class="poem-text">Jistě všichni oceníte,
+že zas mléko dostanete
+bíle, čerstvé, lahodné,
+pro všechny generace vhodné,
+kosti mozek posílí,
+dobrou náladu dodá,
+lepší než klackem do hlavy,
+vše je to zdarma,
+hurá, hurá, hurá!!!</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_3')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_4">
+                    <div>
+                        <div class="poem-date">📅 26. 9. 2019</div>
+                        <h4>Léto už je v dáli</h4>
+                        <div class="poem-text">Léto už je v dáli,
+v sobotu se pokloníme velkému králi,
+svatý Václav, udatný to jinoch byl,
+však také pravidelně mléko pil.
+Měl ho raději než víno,
+to je dnes věc jistá,
+po mléku vám zůstane,
+vždycky mysl čistá.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_4')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_5">
+                    <div>
+                        <div class="poem-date">📅 30. 9. 2019</div>
+                        <h4>Poslední den v září</h4>
+                        <div class="poem-text">Poslední den v září,
+z lesů se páří.
+Konečně rostou houby,
+už z toho bolí klouby.
+Na to je nejlepší ovoce do škol,
+ředkvička, mrkev a jablko se švestkou.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_5')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_6">
+                    <div>
+                        <div class="poem-date">📅 9. 10. 2019</div>
+                        <h4>Mléko bílé tekuté</h4>
+                        <div class="poem-text">Mléko bílé tekuté,
+z české země vzedmuté.
+plnotučné, zdravé,
+Pro správný vývoj to pravé.
+Pijou ho všechny lidičky,
+tento týden budou,
+jen samé jedničky.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_6')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_7">
+                    <div>
+                        <div class="poem-date">📅 14. 10. 2019</div>
+                        <h4>Tekuté jablíčko</h4>
+                        <div class="poem-text">Tekuté jablíčko,
+osvěží stejně,
+jak podzemní sluníčko.
+Svítit by mělo dnes celý den,
+to nám krásně začíná,
+ten čtyřicátý druhý týden.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_7')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_8">
+                    <div>
+                        <div class="poem-date">📅 16. 10. 2019</div>
+                        <h4>Mléko do škol to je krása</h4>
+                        <div class="poem-text">Mléko do škol to je krása,
+každé dětské srdce jásá,
+chmury z těla vyžene,
+také žízeň zažene.
+Dodá tělu vápník, sodík,
+jak vás učí chemikáři,
+calcium a natrium,
+dobrý voják Švejk měl ale,
+stejně radši rum.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_8')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_9">
+                    <div>
+                        <div class="poem-date">📅 24. 10. 2019</div>
+                        <h4>Prázdniny se blíží</h4>
+                        <div class="poem-text">Prázdniny se blíží,
+už to cítím v kříži.
+Jsou to prázdniny,
+krátké, podzimní,
+lepší je mléko čerstvé,
+než acidofilní.
+Krabicové je také dobré,
+zatím je ho dost,
+dobrá zpráva na závěr,
+v sobotu o hodinu delší noc.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_9')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_10">
+                    <div>
+                        <div class="poem-date">📅 25. 10. 2019</div>
+                        <h4>Ovoce do škol</h4>
+                        <div class="poem-text">Ovoce do škol,
+no to je tuze krásné,
+o prázdninách prožijete,
+jenom věci šťastné.
+Počasí vám vyjde,
+říkali to v rádiu,
+lepší propečený steak,
+než dýně na grilu.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_10')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_11">
+                    <div>
+                        <div class="poem-date">📅 6. 11. 2019</div>
+                        <h4>První listopadová středa</h4>
+                        <div class="poem-text">První listopadová středa,
+po rodičáku se uklidnit je třeba.
+Na to dobré mléko a sýr jest,
+tak si ho vpohodě vychutnejme,
+na vše špatné zapomeňme,
+myslete na to příjemné,
+například že opět po roce,
+za necelé dva měsíce,
+tu budou pohodové vánoce.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_11')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_12">
+                    <div>
+                        <div class="poem-date">📅 11. 11. 2019</div>
+                        <h4>Na bílém koni</h4>
+                        <div class="poem-text">Na bílém koni,
+Martin dnes nepřijel,
+ale nezoufejte,
+přijela alespoň bílá avie
+a v ní ovoce do škol.
+Zdravé jako smíšený les,
+na 100% vám imunitu posílí dnes.
+Mrkvička a ředkvička,
+nemine vás jednička,
+rajče a mandarinka,
+pochválí vás maminka.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_12')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_13">
+                    <div>
+                        <div class="poem-date">📅 6. 1. 2020</div>
+                        <h4>Tak tu máme nový rok</h4>
+                        <div class="poem-text">Tak tu máme nový rok,
+na konci má číslo dvacet,
+ten kdo si dnes pitíčko dá,
+nebude po něm zvracet.
+Naopak mysl mu posílí,
+Energii dodá,
+Bude ho chtít píti,
+opět zas a znova.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_13')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_14">
+                    <div>
+                        <div class="poem-date">📅 7. 1. 2020</div>
+                        <h4>Včera byla jablečná pitíčka</h4>
+                        <div class="poem-text">Včera byla jablečná pitíčka,
+Dneska budou plnotučná mlíčka,
+To aby byla spokojená vaše hladová bříška</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_14')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_15">
+                    <div>
+                        <div class="poem-date">📅 20. 1. 2020</div>
+                        <h4>Jména dvou svatků</h4>
+                        <div class="poem-text">Dneska svátek slavíme,
+Ovoce do škol nám přivážíme.
+Posvačíte mandarinku,
+Jablko a ředkvičku,
+A kdo sní i rajče,
+Dostane jedničku.
+Teď před pololetím se to jistě hodí.
+Známky budou zase lepší,
+Než kdyby bylo loni.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_15')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_16">
+                    <div>
+                        <div class="poem-date">📅 28. 1. 2020</div>
+                        <h4>Pololetní prázdniny</h4>
+                        <div class="poem-text">Pololetní prázdniny
+Už jsou za dveřmi,
+Dnes bude k svačině
+Mléčný výrobek výtečný,
+A sice bobík milk drink,
+Bílé jako sníh,
+Přeji hezké prázdniny
+A na známkách hodně jedniček</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_16')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_17">
+                    <div>
+                        <div class="poem-date">📅 11. 2. 2020</div>
+                        <h4>Mléko a sýr to je krása</h4>
+                        <div class="poem-text">Mléko a sýr to je krása,
+Každý jistě jásá,
+To si o přestávce dáte,
+Obzvlášť vy co nesnídáte.
+Jedna špatná zpráva,
+Odpoledko dnes,
+Jedna dobrá zpráva,
+Za necelý měsíc,
+Je tu školní ples.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_17')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_18">
+                    <div>
+                        <div class="poem-date">📅 17. 2. 2020</div>
+                        <h4>Ovocné pyré a mandarinka</h4>
+                        <div class="poem-text">Ovocné pyré a mandarinku dostanete dnes,
+Brzy bude jaro,
+Pokvete černý bez,
+Ještě jedna informace:
+Už za 18 dní tu máme školní ples</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_18')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_19">
+                    <div>
+                        <div class="poem-date">📅 18. 2. 2020</div>
+                        <h4>Mléko bílé jako sníh</h4>
+                        <div class="poem-text">Mléko bílé jako sníh,
+Kdo ho pije každý den,
+Ten bude silný a zdravý,
+To je pravda, bez pochyb,
+Kdo by to nechtěl znát,
+Je to základ na cestě dál.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_19')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_20">
+                    <div>
+                        <div class="poem-date">📅 19. 2. 2020</div>
+                        <h4>Svačinky dnes přivezli</h4>
+                        <div class="poem-text">Svačinky dnes přivezli,
+Skoro v bio kvalitě.
+Bio vládne světu,
+Bio jablko, bio mrkvička
+Bio rajče, bio ředkvička.
+No to je paráda,
+A nezapomeňte dnes odpoledne
+Biologická olympiáda,
+Začátek ve 14 hodin,
+To určitě stihněte,
+U paní učitelky si
+Jistě blýskněte,
+Nemusíte vyhrát,
+Stačí se zúčastnit,
+A dobrý pocit mít.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_20')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_21">
+                    <div>
+                        <div class="poem-date">📅 3. 3. 2020</div>
+                        <h4>Sýr eidam</h4>
+                        <div class="poem-text">Sýr eidam je výborný,
+Velká událost se chystá,
+To je věc jistá,
+Všichni už se těší,
+V pátek je tu školní ples</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_21')">🗑️ Smazat</button>
+                </div>
+
+                <div class="poem-card searchable-item" id="poem_22">
+                    <div>
+                        <div class="poem-date">📅 8. 5. 2020</div>
+                        <h4>Výlet do lesa</h4>
+                        <div class="poem-text">Dnes jsem šel do lesa,
+Hledat jsem šel houby,
+Jedna z nich byla zajímavá,
+Ale jinak krásný den,
+Příroda je hezká.</div>
+                    </div>
+                    <button class="admin-delete-btn" onclick="deleteElement('poem_22')">🗑️ Smazat</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB: SCHRÁNKA DŮVĚRY -->
+        <div id="schranka" class="tab-content">
+            <h3 class="section-title">📬 Anonymní schránka důvěry</h3>
+            
+            <div class="calculator-box">
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.94rem;">
+                    Zde můžeš napsat vzkaz, nápad nebo problém zcela anonymně. Neukládá se žádné jméno ani IP adresa. Vzkaz se bezpečně doručí přímo do školního Discordu.
+                </p>
+                
+                <div class="form-group">
+                    <label for="msgCategory">Kategorie vzkazu:</label>
+                    <select id="msgCategory">
+                        <option value="podnet">💡 Nápad / Podnět pro školu</option>
+                        <option value="problem">⚠️ Problém / Stížnost</option>
+                        <option value="chvala">⭐ Pochvala</option>
+                        <option value="jine">💬 Jiné</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="msgText">Text vzkazu (min. 5 znaků):</label>
+                    <textarea id="msgText" rows="5" placeholder="Napiš, co máš na srdci..."></textarea>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
+                    <button class="btn-link" id="btnSubmitMsg" onclick="submitMessage()">🚀 Odeslat vzkaz</button>
+                    <span id="cooldownTimer" style="font-size: 0.85rem; color: var(--text-muted);"></span>
+                </div>
+                
+                <div id="msgResult" style="margin-top: 1rem; font-weight: 700; min-height: 1.5rem;"></div>
+            </div>
+        </div>
+
+        <!-- TAB: ŠKOLNÍ PARLAMENT -->
+        <div id="parlament" class="tab-content">
+            <h3 class="section-title">🏛️ Školní parlament 2026/27</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Žákovské zastupitelstvo školy — zástupci jednotlivých tříd. Máte podnět k chodu školy? Napište nám přes schránku důvěry.
+            </p>
+            <table class="holiday-table">
+                <thead><tr><th>Třída</th><th>Zvolení zástupci</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>6.A</strong></td><td>E. F., B. J.</td></tr>
+                    <tr><td><strong>6.B</strong></td><td>A. C., L. Š.</td></tr>
+                    <tr><td><strong>6.C</strong></td><td>K. T., H. O.</td></tr>
+                    <tr><td><strong>7.A</strong></td><td>T. K.</td></tr>
+                    <tr><td><strong>7.B</strong></td><td>M. F., V. S.</td></tr>
+                    <tr><td><strong>8.A</strong></td><td>K. B.</td></tr>
+                    <tr><td><strong>8.B</strong></td><td>L. H., J. K.</td></tr>
+                    <tr><td><strong>8.C</strong></td><td>J. S., V. K.</td></tr>
+                    <tr><td><strong>9.A</strong></td><td>J. N., L. B.</td></tr>
+                    <tr><td><strong>9.B</strong></td><td>M. C., O. Z.</td></tr>
+                    <tr><td><strong>9.C</strong></td><td>A. F., V. P., M. E.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- PATIČKA -->
+    <footer>
+        <p>&copy; Žákovský web ZŠ PhDr. J. S. Gutha-Jarkovského, Kostelec nad Orlicí. Školní rok 2026/2027.</p>
+        <p style="font-size: 0.85rem; opacity: 0.9;">
+            Vytvořeno žáky školy | <a href="https://www.zskostelec.cz" target="_blank" rel="noopener noreferrer">Oficiální web školy</a> | <a href="https://zsgjkno.edupage.org/" target="_blank" rel="noopener noreferrer">EduPage</a>
+        </p>
+    </footer>
+
+    <script>
+        // TÉMATA (DARK / LIGHT)
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(theme) {
+            const btn = document.getElementById('themeToggle');
+            if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        updateThemeIcon(document.documentElement.getAttribute('data-theme') || 'light');
+
+        // PŘESKOČENÍ NEBO SPUŠTĚNÍ ÚVODNÍ ANIMACE
+        let introFinished = false;
+        function finishIntro() {
+            if (introFinished) return;
+            introFinished = true;
+
+            const introLogo = document.getElementById('introLogo');
+            const introOverlay = document.getElementById('introOverlay');
+            const headerLogoSlot = document.getElementById('headerLogoSlot');
+
+            if (headerLogoSlot && introLogo && !headerLogoSlot.contains(introLogo)) {
+                introLogo.style.animation = 'none';
+                introLogo.style.transform = 'none';
+                introLogo.style.width = '100%';
+                introLogo.style.height = '100%';
+                introLogo.style.padding = '0';
+                introLogo.style.boxShadow = 'none';
+                headerLogoSlot.appendChild(introLogo);
+            }
+
+            if (introOverlay) {
+                introOverlay.style.opacity = '0';
+                introOverlay.style.visibility = 'hidden';
+                setTimeout(() => { if (introOverlay) introOverlay.remove(); }, 400);
+            }
+
+            document.body.classList.remove('intro-running');
+            document.body.classList.add('intro-complete');
+        }
+
+        function skipIntro() {
+            finishIntro();
+        }
+
+        window.addEventListener('load', () => {
+            const introLogo = document.getElementById('introLogo');
+            const introOverlay = document.getElementById('introOverlay');
+            const headerLogoSlot = document.getElementById('headerLogoSlot');
+
+            if (!introLogo || !headerLogoSlot) {
+                finishIntro();
+                return;
+            }
+
+            setTimeout(() => {
+                if (introFinished) return;
+                const targetRect = headerLogoSlot.getBoundingClientRect();
+                const startRect = introLogo.getBoundingClientRect();
+
+                const translateX = targetRect.left + (targetRect.width / 2) - (startRect.left + (startRect.width / 2));
+                const translateY = targetRect.top + (targetRect.height / 2) - (startRect.top + (startRect.height / 2));
+                const scale = targetRect.width / startRect.width;
+
+                introLogo.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                setTimeout(() => {
+                    finishIntro();
+                }, 900);
+            }, 800);
+        });
+
+        // PŘEPÍNÁNÍ ZÁLOŽEK
+        function switchSection(sectionId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Synchronizace aktivní třídy v navigačním menu
+            const navLinks = document.querySelectorAll('#mainNav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // TERMÍNY PRÁZDNIN (2026/2027)
+        const weekdayNames = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
+        const holidays = [
+            { name: "Podzimní prázdniny", date: new Date(2026, 9, 29), endDate: new Date(2026, 9, 30), dateStr: "29. 10. – 30. 10. 2026" },
+            { name: "Vánoční prázdniny", date: new Date(2026, 11, 23), endDate: new Date(2027, 0, 3), dateStr: "23. 12. 2026 – 3. 1. 2027" },
+            { name: "Pololetní prázdniny", date: new Date(2027, 0, 29), endDate: new Date(2027, 0, 29), dateStr: "29. 1. 2027" },
+            { name: "Jarní prázdniny", date: new Date(2027, 1, 8), endDate: new Date(2027, 1, 14), dateStr: "8. 2. – 14. 2. 2027" },
+            { name: "Velikonoční prázdniny", date: new Date(2027, 2, 25), endDate: new Date(2027, 2, 25), dateStr: "25. 3. 2027" },
+            { name: "Hlavní prázdniny", date: new Date(2027, 6, 1), endDate: new Date(2027, 7, 31), dateStr: "1. 7. – 31. 8. 2027" }
+        ];
+
+        function getHolidayWeekdays(holiday) {
+            const startDay = weekdayNames[holiday.date.getDay()];
+            const endDay = weekdayNames[(holiday.endDate || holiday.date).getDay()];
+            if (holiday.date.toDateString() === (holiday.endDate || holiday.date).toDateString()) {
+                return startDay;
+            }
+            return startDay + ' – ' + endDay;
+        }
+
+        function updateNavCountdown() {
+            const now = new Date();
+            
+            // Kontrola právě probíhajících prázdnin
+            const currentHoliday = holidays.find(h => {
+                const end = new Date((h.endDate || h.date).getTime() + 86400000);
+                return now >= h.date && now < end;
+            });
+
+            const countdownEl = document.getElementById('navCountdownText');
+            if (currentHoliday) {
+                if (countdownEl) countdownEl.innerHTML = '🎉 Probíhají: <span>' + currentHoliday.name + '</span>';
+            } else {
+                const nextHoliday = holidays.find(h => h.date > now);
+                if (!nextHoliday) {
+                    if (countdownEl) countdownEl.innerText = "Školní rok skončil";
+                } else {
+                    const diff = nextHoliday.date - now;
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const startWeekday = weekdayNames[nextHoliday.date.getDay()];
+                    if (countdownEl) {
+                        countdownEl.innerHTML = nextHoliday.name + ' (' + startWeekday + '): <span>' + days + 'd ' + hours + 'h</span>';
+                    }
+                }
+            }
+
+            // Dropdown kalendář
+            const dropdown = document.getElementById('islandDropdown');
+            if (dropdown) {
+                let dropdownHtml = '<h5 style="font-size:0.85rem;color:#86efac;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:0.5px;">📅 Kalendář prázdnin</h5>';
+                holidays.forEach(h => {
+                    const end = new Date((h.endDate || h.date).getTime() + 86400000);
+                    let timeStr = "";
+                    if (now >= h.date && now < end) {
+                        timeStr = '<span style="color:#4ade80;font-weight:700;">Právě probíhají</span>';
+                    } else if (now >= end) {
+                        timeStr = '<span style="color:#64748b;">Proběhly</span>';
+                    } else {
+                        const diff = h.date - now;
+                        const days = Math.floor(diff / 86400000);
+                        const hours = Math.floor((diff % 86400000) / 3600000);
+                        timeStr = '<span style="color:#38bdf8;font-weight:700;">' + days + 'd ' + hours + 'h</span>';
+                    }
+                    dropdownHtml += '<div class="island-holiday-item"><div style="display:flex;justify-content:space-between;align-items:center;"><span>' + h.name + '</span>' + timeStr + '</div><span style="color:#94a3b8;font-size:0.75rem;">' + h.dateStr + ' (' + getHolidayWeekdays(h) + ')</span></div>';
+                });
+                dropdown.innerHTML = dropdownHtml;
+            }
+        }
+
+        setInterval(updateNavCountdown, 1000);
+        updateNavCountdown();
+
+        // KALKULAČKA PRŮMĚRU ZNÁMEK (S LOCALSTORAGE)
+        let grades = [];
+        try {
+            const savedGrades = localStorage.getItem('school_grades');
+            if (savedGrades) grades = JSON.parse(savedGrades);
+        } catch (e) { grades = []; }
+
+        function saveGradesToStorage() {
+            try { localStorage.setItem('school_grades', JSON.stringify(grades)); } catch (e) {}
+        }
+
+        function addGrade() {
+            const gradeEl = document.getElementById('gradeInput');
+            const weightEl = document.getElementById('weightInput');
+            const gradeVal = parseFloat(gradeEl ? gradeEl.value : 0);
+            const weightVal = parseFloat(weightEl ? weightEl.value : 1);
+
+            if (!gradeVal || gradeVal < 1 || gradeVal > 5) {
+                alert('Zadejte platnou známku od 1 do 5.');
+                if (gradeEl) gradeEl.focus();
+                return;
+            }
+            if (!weightVal || weightVal <= 0 || weightVal > 20) {
+                alert('Zadejte platnou váhu známky (1–20).');
+                if (weightEl) weightEl.focus();
+                return;
+            }
+
+            grades.push({ grade: gradeVal, weight: weightVal });
+            saveGradesToStorage();
+            if (gradeEl) { gradeEl.value = ''; gradeEl.focus(); }
+            renderGrades();
+            calculateAverage();
+        }
+
+        function removeGrade(index) {
+            grades.splice(index, 1);
+            saveGradesToStorage();
+            renderGrades();
+            calculateAverage();
+        }
+
+        function clearAllGrades() {
+            if (grades.length === 0) return;
+            if (confirm('Opravdu chcete smazat všechny zadané známky?')) {
+                grades = [];
+                saveGradesToStorage();
+                renderGrades();
+                calculateAverage();
+            }
+        }
+
+        function renderGrades() {
+            const list = document.getElementById('gradesList');
+            if (!list) return;
+            list.innerHTML = '';
+            grades.forEach((item, index) => {
+                const chip = document.createElement('div');
+                chip.className = 'grade-chip';
+                chip.innerHTML = 'Známka: ' + item.grade + ' (váha: ' + item.weight + ') <button onclick="removeGrade(' + index + ')" title="Odstranit známku">&times;</button>';
+                list.appendChild(chip);
+            });
+        }
+
+        function calculateAverage() {
+            const display = document.getElementById('resultDisplay');
+            if (!display) return;
+            if (grades.length === 0) {
+                display.innerText = 'Vážený průměr: —';
+                display.style.background = 'var(--brand-orange)';
+                return;
+            }
+            let sum = 0, totalWeight = 0;
+            grades.forEach(g => { sum += g.grade * g.weight; totalWeight += g.weight; });
+            const avg = (sum / totalWeight).toFixed(2);
+            display.innerText = 'Vážený průměr: ' + avg;
+
+            // Barva průměru podle známky
+            if (avg <= 1.5) display.style.background = 'var(--brand-green)';
+            else if (avg <= 2.5) display.style.background = '#0284c7';
+            else if (avg <= 3.5) display.style.background = '#ea580c';
+            else display.style.background = '#dc2626';
+        }
+
+        // Inicializace počitadla
+        renderGrades();
+        calculateAverage();
+
+        // SCHRÁNKA DŮVĚRY S OCHRANOU PROTI SPAMU A MENTIONS
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1555155242369155144/uxTdjXEEY8Ub1HHaUjpIZduscuhJmmcVmeO_ZvLUNB8JZVJaFBplp-XL1HwV0lv1qWfN';
+        const COOLDOWN_SECONDS = 45;
+
+        async function submitMessage() {
+            const textEl = document.getElementById('msgText');
+            const catEl = document.getElementById('msgCategory');
+            const resultEl = document.getElementById('msgResult');
+            const btnEl = document.getElementById('btnSubmitMsg');
+
+            const text = textEl ? textEl.value.trim() : '';
+            const categoryLabel = (catEl && catEl.options[catEl.selectedIndex]) ? catEl.options[catEl.selectedIndex].text : 'Obecný vzkaz';
+
+            if (!text || text.length < 5) {
+                alert('Prosím, napiš text vzkazu (minimálně 5 znaků).');
+                if (textEl) textEl.focus();
+                return;
+            }
+
+            // Kontrola časového limitu (Cooldown)
+            const lastSent = parseInt(localStorage.getItem('last_msg_sent_time') || '0', 10);
+            const now = Date.now();
+            const elapsed = Math.floor((now - lastSent) / 1000);
+            if (elapsed < COOLDOWN_SECONDS) {
+                const wait = COOLDOWN_SECONDS - elapsed;
+                alert('Pro ochranu před zahlcením můžeš odeslat další vzkaz za ' + wait + ' s.');
+                return;
+            }
+
+            if (resultEl) {
+                resultEl.innerText = '⏳ Odesílám vzkaz do Discordu...';
+                resultEl.style.color = 'var(--text-muted)';
+            }
+            if (btnEl) {
+                btnEl.disabled = true;
+                btnEl.innerText = '⏳ Odesílám...';
+            }
+
+            try {
+                // Ochrana před zneužitím: oříznutí a zabránění pingnutí @everyone / @here
+                let safeText = text.slice(0, 1900);
+                safeText = safeText.replace(/@(everyone|here)/gi, '@\u200B$1');
+
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: 'Schránka důvěry ZŠ Gutha Jarkovského',
+                        avatar_url: 'https://cdn-icons-png.flaticon.com/512/3062/3062634.png',
+                        allowed_mentions: { parse: [] }, // Nikdy nepingne @everyone
+                        embeds: [{
+                            title: '📬 Nový vzkaz ze schránky důvěry',
+                            color: 15358092, // Barva školy #ea580c
+                            fields: [
+                                { name: '📂 Kategorie', value: String(categoryLabel).slice(0, 256), inline: true },
+                                { name: '📝 Znění vzkazu', value: safeText }
+                            ],
+                            footer: { text: 'Žákovský web ZŠ Gutha Jarkovského • Zcela anonymní' },
+                            timestamp: new Date().toISOString()
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Chyba serveru Discord: ' + response.status);
+                }
+
+                localStorage.setItem('last_msg_sent_time', String(Date.now()));
+
+                if (resultEl) {
+                    resultEl.innerText = '✓ Vzkaz byl úspěšně a anonymně odeslán do Discordu!';
+                    resultEl.style.color = 'var(--brand-green)';
+                }
+                if (textEl) textEl.value = '';
+
+                setTimeout(() => {
+                    if (resultEl && resultEl.innerText.startsWith('✓')) {
+                        resultEl.innerText = '';
+                    }
+                }, 6000);
+
+            } catch (err) {
+                console.error('Chyba při odesílání do Discordu:', err);
+                if (resultEl) {
+                    resultEl.innerText = '✗ Odeslání se nezdařilo. Zkontrolujte připojení k internetu a zkuste to znovu.';
+                    resultEl.style.color = '#dc2626';
+                }
+            } finally {
+                if (btnEl) {
+                    btnEl.disabled = false;
+                    btnEl.innerText = '🚀 Odeslat vzkaz';
+                }
+            }
+        }
+
+        // VYHLEDÁVÁNÍ V KARTÁCH, BÁSNIČKÁCH A PARLAMENTU
+        function handleSearchInput(e) {
+            const term = e.target.value.toLowerCase().trim();
+            const items = document.querySelectorAll('.searchable-item');
+
+            if (!term) {
+                items.forEach(i => { i.style.display = ''; });
+                return;
+            }
+
+            let firstMatchTab = null;
+            let matchCount = 0;
+
+            items.forEach(item => {
+                const keywords = item.getAttribute('data-keywords') || '';
+                const text = (item.innerText + ' ' + keywords).toLowerCase();
+                const match = text.includes(term);
+                item.style.display = match ? '' : 'none';
+                if (match) {
+                    matchCount++;
+                    if (!firstMatchTab) firstMatchTab = item.closest('.tab-content');
+                }
+            });
+
+            // Přepnutí na tab s výsledkem, pokud aktuální tab nemá žádný výsledek
+            const activeTab = document.querySelector('.tab-content.active');
+            if (firstMatchTab && activeTab !== firstMatchTab) {
+                const currentTabHasMatch = activeTab.querySelector('.searchable-item:not([style*="none"])');
+                if (!currentTabHasMatch) {
+                    switchSection(firstMatchTab.id);
+                }
+            }
+        }
+
+        // ADMINISTRACE (SHA-256 HASH + SKUTEČNÉ UKLÁDÁNÍ DO LOCALSTORAGE)
+        const ADMIN_HASH = '448d971a11b76774048f99129eaae04beb913bd9f83bc65f4c22208af7e4eb24'; // Heslo: admin123
+
+        async function sha256(text) {
+            const data = new TextEncoder().encode(text);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function openLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                const pass = document.getElementById('adminPassword');
+                if (pass) { pass.value = ''; pass.focus(); }
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        async function verifyAdmin() {
+            const passEl = document.getElementById('adminPassword');
+            const pass = passEl ? passEl.value : '';
+            if (await sha256(pass) === ADMIN_HASH) {
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                activateAdminMode();
+                closeModal();
+            } else {
+                alert('Nesprávné přístupové heslo správce!');
+            }
+        }
+
+        function activateAdminMode() {
+            document.body.classList.add('is-admin');
+            const bar = document.getElementById('adminBar');
+            if (bar) bar.style.display = 'flex';
+            makeEditable(true);
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            document.body.classList.remove('is-admin');
+            const bar = document.getElementById('adminBar');
+            if (bar) bar.style.display = 'none';
+            makeEditable(false);
+            if (window.location.hash === '#admin') {
+                history.replaceState(null, document.title, window.location.pathname);
+            }
+        }
+
+        function makeEditable(enabled) {
+            const elements = document.querySelectorAll('body *');
+            elements.forEach(el => {
+                if (el.closest('button, a, input, select, textarea, #adminBar, #loginModal, script, style, #introOverlay')) return;
+                const hasElementChildren = Array.from(el.children).length > 0;
+                const hasText = el.textContent.trim().length > 0;
+                if (hasElementChildren || !hasText) return;
+                el.contentEditable = enabled ? 'true' : 'false';
+                if (enabled) { el.classList.add('editable'); } else { el.classList.remove('editable'); }
+            });
+        }
+
+        function deleteElement(id) {
+            const el = document.getElementById(id);
+            if (el && confirm('Opravdu chcete smazat tento prvek?')) {
+                el.remove();
+                saveEdits(true);
+            }
+        }
+
+        function addNewOverviewCard() {
+            const grid = document.getElementById('overviewGrid');
+            if (!grid) return;
+            const newId = 'card_custom_' + Date.now();
+            grid.insertAdjacentHTML('beforeend',
+                '<div class="card searchable-item" id="' + newId + '"><div><div class="card-header-icon">✨</div>' +
+                '<h3>Nový název služby</h3><p>Popis nové služby pro žáky naší školy.</p></div>' +
+                '<button class="admin-delete-btn" onclick="deleteElement(\'' + newId + '\')">🗑️ Smazat</button></div>');
+            makeEditable(true);
+            saveEdits(true);
+        }
+
+        // Skutečné perzistentní ukládání změn
+        function saveEdits(silent) {
+            try {
+                const mainContainer = document.querySelector('.main-container');
+                if (mainContainer) {
+                    localStorage.setItem('school_site_saved_html', mainContainer.innerHTML);
+                }
+                if (!silent) alert('✓ Veškeré změny byly úspěšně uloženy do prohlížeče.');
+            } catch (e) {
+                console.error(e);
+                alert('Chyba při ukládání: ' + e.message);
+            }
+        }
+
+        function resetEdits() {
+            if (confirm('Opravdu chcete obnovit výchozí obsah a smazat veškeré úpravy?')) {
+                try { localStorage.removeItem('school_site_saved_html'); } catch (e) {}
+                location.reload();
+            }
+        }
+
+        // Načtení uložených úprav z localStorage
+        (function restoreEdits() {
+            try {
+                const saved = localStorage.getItem('school_site_saved_html');
+                if (saved) {
+                    const mainContainer = document.querySelector('.main-container');
+                    if (mainContainer) mainContainer.innerHTML = saved;
+                }
+            } catch (e) {}
+        })();
+
+        // Kontrola přihlášení admina a #admin v URL
+        (function checkAdminState() {
+            if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+                activateAdminMode();
+            }
+            if (window.location.hash === '#admin' || window.location.search.includes('admin')) {
+                openLoginModal();
+            }
+        })();
+
+        // Zavření modálu klávesou ESC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
