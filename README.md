@@ -1,0 +1,1 @@
+# zakovskyweb.cz
