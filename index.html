@@ -15,6 +15,8 @@
     <script>
         (function () {
             try {
+                // Vymazání staré mezipaměti HTML, aby se vždy zobrazil nový a aktuální obsah
+                localStorage.removeItem('school_site_saved_html');
                 const saved = localStorage.getItem('theme');
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 const theme = saved || (prefersDark ? 'dark' : 'light');
@@ -1539,136 +1541,127 @@ Příroda je hezká.</div>
             </div>
         </div>
 
-        <!-- TAB: ŠKOLNÍ PARLAMENT (UPRAVENO DLE OFICIÁLNÍHO ZASEDÁNÍ A TABULE) -->
+        <!-- TAB: ŠKOLNÍ PARLAMENT (OFICIÁLNÍ SLOŽENÍ) -->
         <div id="parlament" class="tab-content">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                 <div>
-                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🏛️ Školní parlament 2026/27</h3>
-                    <p class="doodle-font" style="font-size: 1.3rem; color: var(--brand-green);">Oficiální složení žákovského zastupitelstva naší školy</p>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🏛️ Školní parlament 2026/2027</h3>
+                    <p class="doodle-font" style="font-size: 1.3rem; color: var(--brand-green);">Oficiální funkce a zástupci žáků ZŠ Gutha Jarkovského</p>
                 </div>
                 <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
             </div>
 
-            <!-- VEDENÍ PARLAMENTU – SPOTLIGHT BANNER -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-bottom: 2rem;">
-                
-                <div style="background: var(--bg-card); border: 2.5px solid var(--brand-green); border-radius: 20px 24px 18px 22px; padding: 1.5rem; box-shadow: var(--doodle-shadow-green); display: flex; align-items: center; gap: 1.2rem;">
-                    <div style="width: 58px; height: 58px; border-radius: 16px; background: var(--brand-green-soft); border: 2px solid var(--brand-green); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0;">
-                        👑
-                    </div>
-                    <div>
-                        <div class="doodle-tape doodle-tape-green" style="font-size: 1rem; padding: 1px 10px; margin-bottom: 0.3rem;">Předsedkyně parlamentu</div>
-                        <h4 style="font-size: 1.4rem; font-weight: 800; color: var(--brand-green); margin: 0;">Jiřinka</h4>
-                        <small style="color: var(--text-muted); font-weight: 600;">Zvolena v tajné volbě (16 hlasů)</small>
-                    </div>
-                </div>
-
-                <div style="background: var(--bg-card); border: 2.5px solid var(--brand-orange); border-radius: 20px 24px 18px 22px; padding: 1.5rem; box-shadow: var(--doodle-shadow-orange); display: flex; align-items: center; gap: 1.2rem;">
-                    <div style="width: 58px; height: 58px; border-radius: 16px; background: var(--brand-orange-soft); border: 2px solid var(--brand-orange); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0;">
-                        🤝
-                    </div>
-                    <div>
-                        <div class="doodle-tape" style="font-size: 1rem; padding: 1px 10px; margin-bottom: 0.3rem;">Místopředsedové</div>
-                        <h4 style="font-size: 1.35rem; font-weight: 800; color: var(--brand-orange); margin: 0;">Veru & Helikoptéra</h4>
-                        <small style="color: var(--text-muted); font-weight: 600;">Zástupci předsedkyně (oba po 4 hlasech)</small>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- TABULKA VŠECH FUNKCÍ A ZVOLENÝCH ČLENŮ PARLAMENTU -->
-            <table class="holiday-table">
+            <!-- HLAVNÍ TABULKA FUNKCÍ ŽÁKŮ V PARLAMENTU -->
+            <table class="holiday-table" style="margin-top: 0.5rem; margin-bottom: 2rem;">
                 <thead>
                     <tr>
-                        <th style="width: 25%;">Role / Funkce</th>
-                        <th style="width: 35%;">Zvolení zástupci</th>
-                        <th style="width: 40%;">Hlavní činnost a náplň</th>
+                        <th style="width: 35%;">Funkce / Role</th>
+                        <th style="width: 65%;">Zvolení žáci</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><strong>👑 Předseda</strong></td>
-                        <td><span style="color: var(--brand-green); font-weight: 800; font-size: 1.05rem;">Jiřinka</span></td>
-                        <td>Vedení zasedání parlamentu, reprezentace žáků školy u pana ředitele a učitelů.</td>
+                        <td><strong style="color: var(--brand-green); font-size: 1.05rem;">Jiřina Zdrálková</strong></td>
                     </tr>
                     <tr>
                         <td><strong>🤝 Místopředseda</strong></td>
-                        <td><strong>Veru, Helikoptéra</strong></td>
-                        <td>Zastupování předsedkyně, koordinace týmů a pomoc při organizaci zasedání.</td>
+                        <td><strong style="color: var(--brand-orange); font-size: 1.05rem;">Eliška Valentová, Veronika Pinkasová</strong></td>
                     </tr>
                     <tr>
                         <td><strong>🔄 Spojka</strong></td>
-                        <td><strong>Jiřka Z.</strong></td>
-                        <td>Předávání informací mezi třídami, učiteli a vedením parlamentu.</td>
+                        <td><strong>Jiřina Zdrálková</strong></td>
                     </tr>
                     <tr>
                         <td><strong>📢 Mluvčí</strong></td>
-                        <td><strong>Jana Z., A. K.</strong></td>
-                        <td>Vyhlašování zpráv do rozhlasu, komunikace s žáky a prezentace akcí.</td>
+                        <td><strong>Jana Zdrálková, Anna Kalousková</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>💻 IT Technik</strong></td>
-                        <td><strong>I. K., Matyáš F.</strong></td>
-                        <td>Správa školního žákovského webu, technická podpora a technika při akcích.</td>
+                        <td><strong>💻 IT technik</strong></td>
+                        <td><strong>Matyáš Fiala, Illia Kostiak</strong></td>
                     </tr>
                     <tr>
                         <td><strong>📸 Fotograf</strong></td>
-                        <td><strong>Eliška D., Ver. Pinkasová</strong></td>
-                        <td>Fotodokumentace a videozáznamy ze zasedání a všech akcí školy.</td>
+                        <td><strong>Eliška Daňsová, Veronika Pinkasová</strong></td>
                     </tr>
                     <tr>
                         <td><strong>📝 Zapisovatel</strong></td>
-                        <td><strong>Kačka, Anet</strong></td>
-                        <td>Vedení oficiálních zápisů ze schůzek a archivace projednávaných bodů.</td>
+                        <td><strong>Kateřina Izáková, Aneta Kavalková</strong></td>
                     </tr>
                     <tr>
                         <td><strong>🎨 Nástěnkáři</strong></td>
-                        <td><strong>Nasťa, Lill</strong></td>
-                        <td>Úprava a správa školní nástěnky parlamentu, výzdoba a plakáty.</td>
+                        <td><strong>Liliana Šklíbová, Anastasiia Chernova</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>👥 Support tým</strong></td>
-                        <td><strong>Ostatní zástupci tříd</strong></td>
-                        <td>Pomoc při organizaci akcí, hlasování a sběr podnětů od spolužáků.</td>
+                        <td><strong>👥 Support team</strong></td>
+                        <td>
+                            Veronika Simonová, Viktorie Hamerská, Vojtěch Páleník, Oliver Kaplan, Tomáš Kubec, 
+                            Štěpánka Havlíková, Vendula Jansová, Anna Lohniská, Beáta Pecenová, Eliška Koucká
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- DOODLE KARTY: ZASEDÁNÍ & VÝSLEDKY HLASOVÁNÍ -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 2rem;">
+            <!-- SEZNAM ČLENŮ & TERMÍNY SCHŮZEK -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                 
+                <!-- SEZNAM VŠECH 22 ČLENŮ -->
                 <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 18px 22px 16px 20px; padding: 1.4rem; box-shadow: var(--doodle-shadow-green);">
-                    <div class="doodle-tape doodle-tape-green">📅 Uskutečněná zasedání</div>
-                    <h4 style="font-size: 1.15rem; color: var(--brand-green); margin: 0.4rem 0 0.8rem; font-weight: 800;">Schůzky parlamentu 2026:</h4>
-                    <ul style="list-style: none; padding-left: 0; font-size: 0.93rem; color: var(--text-dark); line-height: 1.8;">
-                        <li>📍 <strong>20. 10. 2026:</strong> Ustavující schůzka školního parlamentu</li>
-                        <li>🗳️ <strong>27. 10. 2026:</strong> Zasedání s volbou předsedy a rozdělením funkcí</li>
-                        <li>📋 <strong>2. 11. 2026:</strong> Pravidelné zasedání a plánování projektů</li>
-                    </ul>
+                    <div class="doodle-tape doodle-tape-green">📋 Seznam členů parlamentu (22 žáků)</div>
+                    <h4 style="font-size: 1.15rem; color: var(--brand-green); margin: 0.4rem 0 0.8rem; font-weight: 800;">Všichni zástupci:</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1rem; font-size: 0.9rem; color: var(--text-dark); line-height: 1.6;">
+                        <div>• Anna Kalousková</div>
+                        <div>• Aneta Kavalková</div>
+                        <div>• Oliver Kaplan</div>
+                        <div>• Vojtěch Páleník</div>
+                        <div>• Illia Kostiak</div>
+                        <div>• Eliška Daňsová</div>
+                        <div>• Kateřina Izáková</div>
+                        <div>• Viktorie Hamerská</div>
+                        <div>• Anastasiia Chernova</div>
+                        <div>• Veronika Simonová</div>
+                        <div>• Tomáš Kubec</div>
+                        <div>• Eliška Valentová</div>
+                        <div>• Liliana Šklíbová</div>
+                        <div>• Štěpánka Havlíková</div>
+                        <div>• Vendula Jansová</div>
+                        <div>• Jiřina Zdrálková</div>
+                        <div>• Anna Lohniská</div>
+                        <div>• Matyáš Fiala</div>
+                        <div>• Beáta Pecenová</div>
+                        <div>• Eliška Koucká</div>
+                        <div>• Jana Zdrálková</div>
+                        <div>• Veronika Pinkasová</div>
+                    </div>
                 </div>
 
+                <!-- TERMÍNY A VÝSLEDKY HLASOVÁNÍ -->
                 <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 18px 22px 16px 20px; padding: 1.4rem; box-shadow: var(--doodle-shadow-orange);">
-                    <div class="doodle-tape">🗳️ Výsledky volby předsednictva</div>
-                    <h4 style="font-size: 1.15rem; color: var(--brand-orange); margin: 0.4rem 0 0.8rem; font-weight: 800;">Výsledky hlasování (27. 10.):</h4>
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; font-size: 0.88rem;">
-                        <span style="background: var(--brand-green-badge); color: var(--brand-green); padding: 4px 10px; border-radius: 8px; font-weight: 700;">👑 Jiřinka: 16 hlasů</span>
-                        <span style="background: var(--brand-orange-badge); color: var(--brand-orange); padding: 4px 10px; border-radius: 8px; font-weight: 700;">🤝 Veru: 4 hlasy</span>
-                        <span style="background: var(--brand-orange-badge); color: var(--brand-orange); padding: 4px 10px; border-radius: 8px; font-weight: 700;">🤝 Helikoptéra: 4 hlasy</span>
-                        <span style="background: var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 8px;">Aneta: 2 hlasy</span>
-                        <span style="background: var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 8px;">Anička: 2 hlasy</span>
-                        <span style="background: var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 8px;">Kačka: 1 hlas</span>
-                    </div>
+                    <div class="doodle-tape">📅 Schůzky & Hlasování</div>
+                    <h4 style="font-size: 1.15rem; color: var(--brand-orange); margin: 0.4rem 0 0.8rem; font-weight: 800;">Termíny zasedání:</h4>
+                    <ul style="list-style: none; padding-left: 0; font-size: 0.95rem; color: var(--text-dark); line-height: 1.8; margin-bottom: 1rem;">
+                        <li>📍 <strong>20. 10.</strong> – Ustavující schůzka</li>
+                        <li>🗳️ <strong>27. 10.</strong> – Volba předsednictva & funkce</li>
+                        <li>📋 <strong>2. 11.</strong> – Pravidelné zasedání</li>
+                    </ul>
+                    <h4 style="font-size: 1.05rem; color: var(--brand-orange); margin-bottom: 0.4rem; font-weight: 800;">Výsledky volby předsednictva:</h4>
+                    <ul style="list-style: none; padding-left: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                        <li>👑 <strong>Jiřina Zdrálková:</strong> 16 hlasů (předsedkyně)</li>
+                        <li>🤝 <strong>Eliška Valentová:</strong> 4 hlasy (místopředsedkyně)</li>
+                        <li>🤝 <strong>Veronika Pinkasová:</strong> 4 hlasy (místopředsedkyně)</li>
+                        <li>▫️ Aneta Kavalková (2), Anna Kalousková (2), Kateřina Izáková (1), Eliška Daňsová</li>
+                    </ul>
                 </div>
 
             </div>
 
-            <!-- VÝZVA PRO ŽÁKY K ODESLÁNÍ PODNĚTU -->
-            <div style="background: var(--brand-green-soft); border: 2px dashed var(--brand-green); border-radius: 18px; padding: 1.4rem 1.6rem; margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <!-- SCHRÁNKA DŮVĚRY -->
+            <div style="background: var(--brand-green-soft); border: 2px dashed var(--brand-green); border-radius: 18px; padding: 1.4rem 1.6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
                 <div>
-                    <h4 style="color: var(--brand-green); font-weight: 800; font-size: 1.15rem; margin-bottom: 0.3rem;">Máte podnět, nápad nebo připomínku pro parlament?</h4>
-                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0;">Napište nám anonymně přes schránku důvěry – vzkaz se doručí přímo na náš Discord.</p>
+                    <h4 style="color: var(--brand-green); font-weight: 800; font-size: 1.15rem; margin-bottom: 0.3rem;">Máš nápad nebo vzkaz pro školní parlament?</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0;">Napiš anonymně přes schránku důvěry – vzkaz se pošle přímo na Discord parlamentu.</p>
                 </div>
-                <button class="btn-link" onclick="switchSection('schranka')">📬 Napsat vzkaz parlamentu</button>
+                <button class="btn-link" onclick="switchSection('schranka')">📬 Napsat vzkaz</button>
             </div>
 
         </div>
@@ -1703,10 +1696,10 @@ Příroda je hezká.</div>
                 title: 'Školní parlament',
                 icon: '🏛️',
                 section: 'parlament',
-                desc: 'Žákovské zastupitelstvo školy — předsedkyně Jiřinka, místopředsedové Veru & Helikoptéra, IT, mluvčí a support tým.',
+                desc: 'Žákovské zastupitelstvo školy — předsedkyně Jiřina Zdrálková, místopředsedkyně Eliška Valentová & Veronika Pinkasová, IT technici a celý tým parlamentu.',
                 btnText: 'Zobrazit parlament',
                 btnClass: 'btn-link btn-orange',
-                keywords: 'parlament zastupitelstvo zástupci třídy žáci schůzky jiřinka veru helikoptéra matyáš'
+                keywords: 'parlament zastupitelstvo zástupci třídy žáci schůzky jiřina zdrálková eliška valentová veronika pinkasová matyáš fiala illia kostiak anna kalousková aneta kavalková'
             },
             {
                 id: 'gutak',
