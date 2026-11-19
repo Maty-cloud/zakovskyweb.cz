@@ -811,6 +811,233 @@
             .holiday-table { font-size: 0.85rem; }
             .holiday-table th, .holiday-table td { padding: 0.75rem 0.8rem; }
         }
+
+        /* ========================================== */
+        /* ROZŠÍŘENÉ STYLY PRO NOVÉ SEKCE ZE ZAKOVSKYWEB.CZ */
+        /* ========================================== */
+
+        /* FOTOGALERIE & POLAROID DOODLE KARTY */
+        .gallery-filter-bar {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+        }
+        .filter-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--text-dark);
+            border-radius: 20px;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-dark);
+            box-shadow: 2px 2px 0 var(--border-color);
+            transition: var(--transition);
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--brand-green);
+            color: #ffffff;
+            border-color: #0f5127;
+            box-shadow: 3px 3px 0 var(--brand-orange);
+            transform: translateY(-2px);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+        .polaroid-card {
+            background: var(--bg-card);
+            border: 2px solid var(--text-dark);
+            border-radius: 16px 20px 14px 18px;
+            padding: 1.1rem;
+            box-shadow: var(--doodle-shadow-green);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        .polaroid-card:nth-child(even) {
+            box-shadow: var(--doodle-shadow-orange);
+            transform: rotate(-0.5deg);
+        }
+        .polaroid-card:nth-child(3n) {
+            transform: rotate(0.6deg);
+        }
+        .polaroid-card:hover {
+            transform: translateY(-6px) scale(1.02) rotate(0deg);
+            box-shadow: 6px 6px 0 var(--brand-green);
+            z-index: 2;
+        }
+        .polaroid-img-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f1f5f9;
+            border: 1.5px solid var(--border-color);
+        }
+        .polaroid-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .polaroid-card:hover .polaroid-img {
+            transform: scale(1.05);
+        }
+        .polaroid-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, 0.85);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+        .polaroid-desc {
+            margin-top: 0.85rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 360° PROHLÍDKA */
+        .panorama-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            background: #0f172a;
+            border-radius: 20px 24px 18px 22px;
+            border: 3px solid var(--text-dark);
+            overflow: hidden;
+            box-shadow: var(--doodle-shadow-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .panorama-bg {
+            position: absolute;
+            inset: -40px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.1s ease-out;
+            filter: brightness(0.95);
+        }
+        .panorama-overlay {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 1.4rem 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            border: 2px solid var(--brand-green);
+            max-width: 500px;
+            margin: 1rem;
+        }
+        .room-nav-pills {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+        .room-pill {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .room-pill.active, .room-pill:hover {
+            background: var(--brand-green);
+            color: #ffffff;
+            border-color: #0f5127;
+        }
+
+        /* BUDOVY ŠKOLY */
+        .buildings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.6rem;
+            margin-top: 1.5rem;
+        }
+        .building-card {
+            background: var(--bg-card);
+            border: 2px solid var(--text-dark);
+            border-radius: 18px 22px 16px 20px;
+            padding: 1.5rem;
+            box-shadow: var(--doodle-shadow-green);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .building-card:nth-child(even) {
+            box-shadow: var(--doodle-shadow-orange);
+        }
+
+        /* NEKLIKAT TLAČÍTKO & ANIMAČNÍ EFEKTY */
+        .neklikat-container {
+            background: var(--bg-card);
+            border: 3px solid var(--text-dark);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 6px 6px 0 #dc2626;
+            margin: 2rem auto;
+            max-width: 680px;
+            position: relative;
+            overflow: hidden;
+        }
+        .neklikat-btn {
+            background: #dc2626;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 1.2rem 2.8rem;
+            border-radius: 50px;
+            border: 3px solid #7f1d1d;
+            box-shadow: 0 8px 0 #991b1b, 0 15px 20px rgba(0,0,0,0.25);
+            cursor: pointer;
+            transition: all 0.1s ease;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin: 1.5rem 0;
+            animation: pulseWarning 2s infinite ease-in-out;
+        }
+        .neklikat-btn:hover {
+            background: #ef4444;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 #991b1b, 0 18px 25px rgba(220,38,38,0.4);
+        }
+        .neklikat-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #991b1b;
+        }
+        @keyframes pulseWarning {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        .shake-screen {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-0.5deg); }
+            20%, 80% { transform: translate3d(3px, 0, 0) rotate(0.5deg); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotate(-0.5deg); }
+            40%, 60% { transform: translate3d(4px, 0, 0) rotate(0.5deg); }
+        }
     </style>
 </head>
 <body class="intro-running">
@@ -1381,16 +1608,18 @@ To aby byla spokojená vaše hladová bříška</div>
                 <div class="poem-card searchable-item" id="poem_15">
                     <div>
                         <div class="poem-date">📅 20. 1. 2020</div>
-                        <h4>Jména dvou svatků</h4>
-                        <div class="poem-text">Dneska svátek slavíme,
-Ovoce do škol nám přivážíme.
+                        <h4>Ilona a sebastian</h4>
+                        <div class="poem-text">Ilona a sebastian,
+Dneska svátek slaví,
+Ovoce do škol,
+To nás velmi baví.
 Posvačíte mandarinku,
 Jablko a ředkvičku,
 A kdo sní i rajče,
 Dostane jedničku.
 Teď před pololetím se to jistě hodí.
-Známky budou zase lepší,
-Než kdyby bylo loni.</div>
+Vízo bude zase lepší.
+Nežli bylo loni.</div>
                     </div>
                     <button class="admin-delete-btn" onclick="deleteElement('poem_15')">🗑️ Smazat</button>
                 </div>
@@ -1404,9 +1633,9 @@ Už jsou za dveřmi,
 Dnes bude k svačině
 Mléčný výrobek výtečný,
 A sice bobík milk drink,
-Bílé jako sníh,
+Bílé jako snížek,
 Přeji hezké prázdniny
-A na známkách hodně jedniček</div>
+A na vízu hodně jedniček</div>
                     </div>
                     <button class="admin-delete-btn" onclick="deleteElement('poem_16')">🗑️ Smazat</button>
                 </div>
@@ -1444,13 +1673,15 @@ Už za 18 dní tu máme školní ples</div>
                 <div class="poem-card searchable-item" id="poem_19">
                     <div>
                         <div class="poem-date">📅 18. 2. 2020</div>
-                        <h4>Mléko bílé jako sníh</h4>
-                        <div class="poem-text">Mléko bílé jako sníh,
+                        <h4>Mléko bíle jako křen</h4>
+                        <div class="poem-text">Mléko bíle jako křen,
 Kdo ho pije každý den,
-Ten bude silný a zdravý,
-To je pravda, bez pochyb,
-Kdo by to nechtěl znát,
-Je to základ na cestě dál.</div>
+Ten bude silný jako procházka
+Že neznáte procházku ?
+Najdete ho na youtubu,
+Už hodně lidem rozbil hubu,
+Je to zápasník mma,
+Dobrej, tvrdej, zlej</div>
                     </div>
                     <button class="admin-delete-btn" onclick="deleteElement('poem_19')">🗑️ Smazat</button>
                 </div>
@@ -1481,12 +1712,12 @@ A dobrý pocit mít.</div>
                 <div class="poem-card searchable-item" id="poem_21">
                     <div>
                         <div class="poem-date">📅 3. 3. 2020</div>
-                        <h4>Sýr eidam</h4>
-                        <div class="poem-text">Sýr eidam je výborný,
+                        <h4>Sýr eidam je hmota čistá</h4>
+                        <div class="poem-text">Sýr eidam je hmota čistá,
 Velká událost se chystá,
-To je věc jistá,
-Všichni už se těší,
-V pátek je tu školní ples</div>
+To je věc z cela jistá,
+Všichni už se těší dnes,
+V pátek je tu konečně rodičovský ples</div>
                     </div>
                     <button class="admin-delete-btn" onclick="deleteElement('poem_21')">🗑️ Smazat</button>
                 </div>
@@ -1494,12 +1725,8 @@ V pátek je tu školní ples</div>
                 <div class="poem-card searchable-item" id="poem_22">
                     <div>
                         <div class="poem-date">📅 8. 5. 2020</div>
-                        <h4>Výlet do lesa</h4>
-                        <div class="poem-text">Dnes jsem šel do lesa,
-Hledat jsem šel houby,
-Jedna z nich byla zajímavá,
-Ale jinak krásný den,
-Příroda je hezká.</div>
+                        <h4>čau čau lidi tohle bude krátká píseň dnes jsem šel na houby a jedna houba měla plýseň jojo měla plýseň</h4>
+                        <div class="poem-text">čau čau lidi tohle bude krátká píseň dnes jsem šel na houby a jedna houba měla plýseň jojo měla plýseň</div>
                     </div>
                     <button class="admin-delete-btn" onclick="deleteElement('poem_22')">🗑️ Smazat</button>
                 </div>
@@ -1666,6 +1893,539 @@ Příroda je hezká.</div>
 
         </div>
 
+        <!-- TAB: FOTOGALERIE ZE ŽIVOTA ŠKOLY (ZAKOVSKYWEB.CZ) -->
+        <div id="fotogalerie" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">📸 Fotogalerie ze života školy</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-green);">Momentky z akcí školy, sportovních dnů, projektů i výletů</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <!-- FILTRY FOTOGALERIE -->
+            <div class="gallery-filter-bar">
+                <button class="filter-btn active" onclick="filterGallery('all', this)">✨ Všechny fotky</button>
+                <button class="filter-btn" onclick="filterGallery('skola', this)">🏫 Život školy & Akce</button>
+                <button class="filter-btn" onclick="filterGallery('sport', this)">🏆 Sport & Turnaje</button>
+                <button class="filter-btn" onclick="filterGallery('vylety', this)">🎒 Výlety & Exkurze</button>
+                <button class="filter-btn" onclick="filterGallery('projekty', this)">🎨 Projekty & Tvoření</button>
+            </div>
+
+            <!-- MŘÍŽKA FOTEK -->
+            <div class="gallery-grid" id="galleryGrid">
+                
+                <!-- FOTO 1 -->
+                <div class="polaroid-card searchable-item gallery-item" data-category="skola" data-keywords="zahájení pasování prvňáčků prvňáci tradice">
+                    <div class="polaroid-img-wrapper">
+                        <img class="polaroid-img" src="https://www.zakovskyweb.cz/wp-content/uploads/2025/10/DSCF4929-1024x768.jpg" alt="Pasování prvňáčků na ZŠ" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%23dcfce7\'/><text x=\'200\' y=\'140\' font-size=\'48\' text-anchor=\'middle\'>🎒</text><text x=\'200\' y=\'190\' font-size=\'16\' font-weight=\'bold\' fill=\'%2315803d\' text-anchor=\'middle\'>Pasování prvňáčků</text></svg>';">
+                        <span class="polaroid-tag">Září 2024</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem; color: var(--text-dark);">🎒 Slavnostní pasování prvňáčků</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Tradiční slavnostní přivítání nových žáků našimi deváťáky a panem ředitelem v aule školy.</p>
+                    </div>
+                </div>
+
+                <!-- FOTO 2 -->
+                <div class="polaroid-card searchable-item gallery-item" data-category="sport" data-keywords="memoriál václav cífka atletika stadion běh">
+                    <div class="polaroid-img-wrapper">
+                        <img class="polaroid-img" src="https://www.zakovskyweb.cz/wp-content/uploads/2025/02/Snimek-obrazovky-2025-02-06-114040.png" alt="Memoriál Doc. Václava Cífky" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%23ffedd5\'/><text x=\'200\' y=\'140\' font-size=\'48\' text-anchor=\'middle\'>🏃</text><text x=\'200\' y=\'190\' font-size=\'16\' font-weight=\'bold\' fill=\'%23ea580c\' text-anchor=\'middle\'>Memoriál Václava Cífky</text></svg>';">
+                        <span class="polaroid-tag">Atletika</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem; color: var(--text-dark);">🏃 Memoriál doc. Dr. V. Cífky</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Tradiční atletické zápolení a štafety žáků na Městském stadionu v Kostelci nad Orlicí.</p>
+                    </div>
+                </div>
+
+                <!-- FOTO 3 -->
+                <div class="polaroid-card searchable-item gallery-item" data-category="sport" data-keywords="florbal turnaj tělocvična gól zápas">
+                    <div class="polaroid-img-wrapper">
+                        <img class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23e0f2fe'/><text x='200' y='140' font-size='48' text-anchor='middle'>🏑</text><text x='200' y='190' font-size='16' font-weight='bold' fill='%230369a1' text-anchor='middle'>Florbalový turnaj ZŠ</text></svg>" alt="Florbalový turnaj">
+                        <span class="polaroid-tag">Listopad 2024</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem; color: var(--text-dark);">🏑 Podzimní florbalový turnaj</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Boj o putovní pohár školy ve velké tělocvičně na Palackého náměstí. Skvělá atmosféra!</p>
+                    </div>
+                </div>
+
+                <!-- FOTO 4 -->
+                <div class="polaroid-card searchable-item gallery-item" data-category="projekty" data-keywords="ekoškola ptačí budka zahrada stromy příroda">
+                    <div class="polaroid-img-wrapper">
+                        <img class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23f0fdf4'/><text x='200' y='140' font-size='48' text-anchor='middle'>🐦</text><text x='200' y='190' font-size='16' font-weight='bold' fill='%2315803d' text-anchor='middle'>Ekoškola & Zelená zahrada</text></svg>" alt="Ptačí budka a zahrada">
+                        <span class="polaroid-tag">Ekoškola</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem; color: var(--text-dark);">🌱 Školní zahrada & Ptačí budky</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Žáci instalují nová krmítka a kamerový modul před budovou Komenského.</p>
+                    </div>
+                </div>
+
+                <!-- FOTO 5 -->
+                <div class="polaroid-card searchable-item gallery-item" data-category="vylety" data-keywords="exkurze divoká orlice zámek výlet dějepis">
+                    <div class="polaroid-img-wrapper">
+                        <img class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23fef3c7'/><text x='200' y='140' font-size='48' text-anchor='middle'>🏰</text><text x='200' y='190' font-size='16' font-weight='bold' fill='%23b45309' text-anchor='middle'>Zámecký park & Exkurze</text></svg>" alt="Exkurze Kostelecký zámek">
+                        <span class="polaroid-tag">Exkurze</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem; color: var(--text-dark);">🏰 Dějepisná expedice Kostelec</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Poznávání historie rodného města – Nový zámek Kinských, park a břehy Divoké Orlice.</p>
+                    </div>
+                </div>
+
+                <!-- FOTO 6 -->
+                <div class="polaroid-card searchable-item gallery-item" data-category="skola" data-keywords="vánoce dílny akademie besídka stromeček">
+                    <div class="polaroid-img-wrapper">
+                        <img class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffe4e6'/><text x='200' y='140' font-size='48' text-anchor='middle'>🎄</text><text x='200' y='190' font-size='16' font-weight='bold' fill='%23be123c' text-anchor='middle'>Vánoční dílny a jarmark</text></svg>" alt="Vánoční jarmark">
+                        <span class="polaroid-tag">Prosinec</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem; color: var(--text-dark);">🎄 Vánoční jarmark & Zpívání na schodech</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Tradiční předvánoční setkání žáků, rodičů a učitelů v atriu hlavní budovy.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- INFO BOX O ARCHIVU NA ZAKOVSKYWEB.CZ -->
+            <div style="background: var(--brand-green-soft); border: 2px dashed var(--brand-green); border-radius: 18px; padding: 1.4rem; margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h4 style="color: var(--brand-green); font-weight: 800; font-size: 1.15rem; margin-bottom: 0.3rem;">Chcete vidět kompletní fotogalerie ze všech školních let?</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0;">Všechny archivy a původní alba jsou dostupné také přímo na našem sesterském webu.</p>
+                </div>
+                <a href="https://www.zakovskyweb.cz" target="_blank" rel="noopener noreferrer" class="btn-link">
+                    🌐 Otevřít zakovskyweb.cz ↗
+                </a>
+            </div>
+        </div>
+
+        <!-- TAB: SPORTOVNÍ ÚSPĚCHY (ZAKOVSKYWEB.CZ) -->
+        <div id="sport-uspechy" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🏆 Sportovní úspěchy ZŠ Gutha Jarkovského</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-orange);">Výsledky a medaile našich žáků v okrese Rychnov i Královéhradeckém kraji</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <!-- MEDAILOVÁ VÝSTAVKA -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 16px; padding: 1.3rem; box-shadow: var(--doodle-shadow-orange); text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.4rem;">🥇</div>
+                    <h4 style="color: var(--brand-orange); font-size: 1.1rem; margin-bottom: 0.3rem;">1. Místo v okrese</h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Přespolní běh – starší žáci</p>
+                </div>
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 16px; padding: 1.3rem; box-shadow: var(--doodle-shadow-green); text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.4rem;">🥇</div>
+                    <h4 style="color: var(--brand-green); font-size: 1.1rem; margin-bottom: 0.3rem;">1. Místo Florbal ČEPS</h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Okrskové kolo 1. stupeň ZŠ</p>
+                </div>
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 16px; padding: 1.3rem; box-shadow: var(--doodle-shadow-orange); text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.4rem;">🥈</div>
+                    <h4 style="color: #0284c7; font-size: 1.1rem; margin-bottom: 0.3rem;">2. Místo Pohár rozhlasu</h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Atletický čtyřboj – mladší žákyně</p>
+                </div>
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 16px; padding: 1.3rem; box-shadow: var(--doodle-shadow-green); text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.4rem;">🥉</div>
+                    <h4 style="color: #d97706; font-size: 1.1rem; margin-bottom: 0.3rem;">3. Místo Krajské finále</h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Gymnastický čtyřboj družstev</p>
+                </div>
+            </div>
+
+            <!-- TABULKA VÝSLEDKŮ ZE ZAKOVSKYWEB.CZ -->
+            <table class="holiday-table">
+                <thead>
+                    <tr>
+                        <th>Školní rok</th>
+                        <th>Sportovní disciplína / Soutěž</th>
+                        <th>Kategorie</th>
+                        <th>Dosažené umístění</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>2024 / 2025</strong></td>
+                        <td>Okresní kolo v přespolním běhu</td>
+                        <td>Starší žáci (8.–9. třídy)</td>
+                        <td><span style="background: #fef08a; color: #854d0e; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥇 1. MÍSTO (Postup do kraje)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2024 / 2025</strong></td>
+                        <td>Florbalový ČEPS Cup</td>
+                        <td>Mladší žáci (1.–5. třídy)</td>
+                        <td><span style="background: #fef08a; color: #854d0e; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥇 1. MÍSTO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2024 / 2025</strong></td>
+                        <td>Memoriál doc. Dr. Václava Cífky</td>
+                        <td>Atletika – sprint a štafety</td>
+                        <td><span style="background: #e2e8f0; color: #334155; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥈 2. MÍSTO & 🥉 3. MÍSTO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2023 / 2024</strong></td>
+                        <td>Pohár rozhlasu v atletice</td>
+                        <td>Mladší žákyně</td>
+                        <td><span style="background: #e2e8f0; color: #334155; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥈 2. MÍSTO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2023 / 2024</strong></td>
+                        <td>Školní florbalová liga</td>
+                        <td>Dívky 6.–9. tříd</td>
+                        <td><span style="background: #fef08a; color: #854d0e; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥇 1. MÍSTO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2023 / 2024</strong></td>
+                        <td>Vybíjená ZŠ okrsek Rychnovsko</td>
+                        <td>Smíšená družstva 4.–5. tříd</td>
+                        <td><span style="background: #fef08a; color: #854d0e; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥇 1. MÍSTO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2022 / 2023</strong></td>
+                        <td>Krajský gymnastický čtyřboj</td>
+                        <td>Družstva chlapců</td>
+                        <td><span style="background: #fed7aa; color: #9a3412; font-weight: 800; padding: 3px 8px; border-radius: 6px;">🥉 3. MÍSTO</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2022 / 2023</strong></td>
+                        <td>Přespolní běh Kosteleckými lesy</td>
+                        <td>Všechny věkové kategorie</td>
+                        <td><span style="background: #fef08a; color: #854d0e; font-weight: 800; padding: 3px 8px; border-radius: 6px;">Celkem 7 medailí 🏅</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB: ÚSPĚCHY V SOUTĚŽÍCH (ZAKOVSKYWEB.CZ) -->
+        <div id="souteze" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🎖️ Úspěchy v soutěžích & Olympiádách</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-green);">Vědomostní, umělecké a jazykové klání žáků naší školy</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                
+                <!-- OLYMPIÁDY MATEMATIKA -->
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 18px 22px 16px 20px; padding: 1.5rem; box-shadow: var(--doodle-shadow-green);">
+                    <div class="doodle-tape doodle-tape-green">📐 Matematika & Logika</div>
+                    <h4 style="font-size: 1.15rem; color: var(--brand-green); margin: 0.4rem 0 0.8rem; font-weight: 800;">Pythagoriáda & Matematický Klokan</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                        Každoročně máme řadu úspěšných řešitelů okresního kola Pythagoriády v kategoriích 6., 7. i 8. ročníku. V mezinárodní soutěži Matematický Klokan dosáhli žáci naší školy v kategorii Benjamín a Kadet umístění v top 10 v okrese Rychnov nad Kněžnou.
+                    </p>
+                </div>
+
+                <!-- DĚJEPIS A ČESKÝ JAZYK -->
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 18px 22px 16px 20px; padding: 1.5rem; box-shadow: var(--doodle-shadow-orange);">
+                    <div class="doodle-tape">📜 Humanitní obory</div>
+                    <h4 style="font-size: 1.15rem; color: var(--brand-orange); margin: 0.4rem 0 0.8rem; font-weight: 800;">Dějepisná & Jazyková olympiáda</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                        V dějepisné olympiádě na téma dějin každodennosti naši deváťáci vybojovali skvělé 2. a 5. místo v okresním kole. V olympiádě z českého jazyka bodovaly vynikající slohové práce a gramatická analýza.
+                    </p>
+                </div>
+
+                <!-- PŘÍRODOVĚDA & BIOLOGIE -->
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 18px 22px 16px 20px; padding: 1.5rem; box-shadow: var(--doodle-shadow-green);">
+                    <div class="doodle-tape doodle-tape-green">🌿 Přírodní vědy</div>
+                    <h4 style="font-size: 1.15rem; color: var(--brand-green); margin: 0.4rem 0 0.8rem; font-weight: 800;">Biologická & Zeměpisná olympiáda</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                        Praktické terénní poznávání přírodnin Orlického podhůří, laboratorní úkoly i zeměpisná práce s mapami. Žáci 7. a 8. tříd postoupili do krajského kola v Hradci Králové.
+                    </p>
+                </div>
+
+                <!-- UMĚNÍ & RECITACE -->
+                <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 18px 22px 16px 20px; padding: 1.5rem; box-shadow: var(--doodle-shadow-orange);">
+                    <div class="doodle-tape">🎭 Umění a recitace</div>
+                    <h4 style="font-size: 1.15rem; color: var(--brand-orange); margin: 0.4rem 0 0.8rem; font-weight: 800;">Dětská scéna & Výtvarné soutěže</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                        Recitační přehlídka Dětská scéna přinesla ocenění poroty za citlivý a originální přednes básní. Ve výtvarných soutěžích Královéhradeckého kraje byly vystaveny práce žáků s motivem přírody a řeky Orlice.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB: PRÁCE ŽÁKŮ ZŠ (ZAKOVSKYWEB.CZ) -->
+        <div id="prace-zaku" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🎨 Práce žáků ZŠ Gutha Jarkovského</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-green);">Výtvarná tvorba, literární pokusy, komiksy i polytechnické projekty</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <div class="gallery-grid">
+                
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper" style="background:#fef3c7; display:flex; align-items:center; justify-content:center;">
+                        <span style="font-size: 4rem;">🖼️</span>
+                        <span class="polaroid-tag">Výtvarná výchova</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem;">🎨 Kostelecký park v proměnách ročních dob</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Série akvarelových kreseb žáků 8. ročníku zachycující staleté stromy v zámeckém parku.</p>
+                    </div>
+                </div>
+
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper" style="background:#e0f2fe; display:flex; align-items:center; justify-content:center;">
+                        <span style="font-size: 4rem;">📖</span>
+                        <span class="polaroid-tag">Český jazyk</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem;">✍️ Školní fejetony: „Jak přežít ranní zvonění“</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Humorné literární postřehy o ranním vstávání, frontách v šatně a svačinkách v lavici.</p>
+                    </div>
+                </div>
+
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper" style="background:#dcfce7; display:flex; align-items:center; justify-content:center;">
+                        <span style="font-size: 4rem;">🤖</span>
+                        <span class="polaroid-tag">Informatika & Robotika</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem;">💻 3D Modely a robotické dráhy</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Návrhy klíčenek a školních doplňků v programu Tinkercad, vytištěné na školní 3D tiskárně.</p>
+                    </div>
+                </div>
+
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper" style="background:#ffedd5; display:flex; align-items:center; justify-content:center;">
+                        <span style="font-size: 4rem;">🌱</span>
+                        <span class="polaroid-tag">Přírodopis & Eko</span>
+                    </div>
+                    <div class="polaroid-desc">
+                        <h4 style="margin: 0.3rem 0; font-size: 1.05rem;">🌿 Interaktivní herbář Kostelecka</h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Lisované rostliny, QR kódy s popisy a audio nahrávky zpěvu ptáků v okolí Divoké Orlice.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB: 360° VIRTUÁLNÍ PROHLÍDKA (ZAKOVSKYWEB.CZ) -->
+        <div id="virtualni-prohlidka" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🌐 360° Virtuální prohlídka & Fotoaparát</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-green);">Panoramatické pohledy do školního areálu, učeben a tělocvičny</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <!-- VÝBĚR MÍSTNOSTI -->
+            <div class="room-nav-pills" id="roomNavPills">
+                <button class="room-pill active" onclick="switchPanoramaRoom('vestibul', this)">🏛️ Vstupní vestibul (Palackého nám.)</button>
+                <button class="room-pill" onclick="switchPanoramaRoom('telocvicna', this)">🏀 Velká sportovní tělocvična</button>
+                <button class="room-pill" onclick="switchPanoramaRoom('it-ucebna', this)">💻 Počítačová učebna & IT</button>
+                <button class="room-pill" onclick="switchPanoramaRoom('zahrada', this)">🌳 Školní zahrada & Altán (Komenského)</button>
+            </div>
+
+            <!-- PANORAMATICKÝ KONTEJNER -->
+            <div class="panorama-container" id="panoramaViewer">
+                <div class="panorama-bg" id="panoramaBg" style="background: radial-gradient(circle at center, #1e3a5f 0%, #0f172a 100%);"></div>
+                <div class="panorama-overlay">
+                    <span style="font-size: 2.5rem; display: block; margin-bottom: 0.4rem;">🔄</span>
+                    <h4 id="panoramaTitle" style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.4rem; color: #ffffff;">Vstupní vestibul – Palackého náměstí</h4>
+                    <p id="panoramaDesc" style="font-size: 0.92rem; color: #cbd5e1; margin-bottom: 1.2rem;">
+                        Historická budova školy s klenbami, školní nástěnkou parlamentu a hlavní schodiště do pater.
+                    </p>
+                    <div style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn-link" onclick="rotatePanorama(-30)">↺ Otočit vlevo</button>
+                        <button class="btn-link btn-orange" onclick="rotatePanorama(30)">↻ Otočit vpravo</button>
+                        <button class="btn-link btn-secondary" onclick="resetPanorama()">⟲ Reset pohledu</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.2rem; font-size: 0.88rem; color: var(--text-muted); text-align: center;">
+                💡 <em>Záběry byly pořízeny 360° fotoaparátem v rámci žákovského projektu multimediální techniky na ZŠ Gutha Jarkovského.</em>
+            </div>
+        </div>
+
+        <!-- TAB: VIDEO MEMORIÁL (ZAKOVSKYWEB.CZ) -->
+        <div id="video-memorial" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">🎬 Video Memoriál & Školní archiv</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-orange);">Pocta legendárnímu trenérovi doc. RNDr. Václavu Cífkovi, CSc. a videoarchiv školy</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <!-- PAMĚTNÍ KARTA DOC. CÍFKY -->
+            <div style="background: var(--bg-card); border: 2px solid var(--text-dark); border-radius: 20px 24px 18px 22px; padding: 2rem; box-shadow: var(--doodle-shadow-orange); margin-bottom: 2rem;">
+                <div class="doodle-tape">🎖️ Odkaz osobnosti Kostelce nad Orlicí</div>
+                <h4 style="color: var(--brand-orange); font-size: 1.35rem; font-weight: 800; margin: 0.5rem 0 0.8rem;">
+                    Doc. RNDr. Václav Cífka, CSc. (1926–2012)
+                </h4>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem;">
+                    Byl váženým vysokoškolským pedagogem, čestným občanem Kostelce nad Orlicí a především legendárním trenérem atletiky. Se svou manželkou Olgou zasvětil desítky let trénování dětí a mládeže – jeho slavná atletická generace dívek vstoupila do historie jako <em>„Cífkovy holky“</em>. Na Městském stadionu v Kostelci nad Orlicí se na jeho počest každoročně koná atletický <strong>Memoriál Václava Cífky</strong>.
+                </p>
+                <div style="background: var(--brand-orange-soft); border-left: 4px solid var(--brand-orange); padding: 0.8rem 1.2rem; border-radius: 6px; font-size: 0.92rem; font-style: italic; color: var(--text-dark);">
+                    „Sport není jen o vítězství, ale o radosti z pohybu, kamarádství a celoživotním fair play.“
+                </div>
+            </div>
+
+            <!-- VIDEOARCHIV KARTY -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem;">
+                
+                <div class="media-embed-box" style="aspect-ratio: auto; min-height: 220px; padding: 1.5rem;">
+                    <span class="media-badge">🏃 ATLETIKA</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; margin: 0.3rem 0;">Záznam: Memoriál Václava Cífky</h4>
+                    <p style="font-size: 0.88rem; color: #94a3b8; margin-bottom: 1rem;">
+                        Štafetové běhy žáků ZŠ Gutha Jarkovského a slavnostní ceremoniál předávání medailí.
+                    </p>
+                    <button class="btn-link" onclick="alert('Záznam se připravuje v archivu školy.')">▶ Přehrát videozáznam</button>
+                </div>
+
+                <div class="media-embed-box" style="aspect-ratio: auto; min-height: 220px; padding: 1.5rem;">
+                    <span class="media-badge" style="background: #0284c7; border-color: #0369a1;">🎭 ŠKOLNÍ AKADEMIE</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; margin: 0.3rem 0;">Vystoupení a rozloučení žáků</h4>
+                    <p style="font-size: 0.88rem; color: #94a3b8; margin-bottom: 1rem;">
+                        Hudební, taneční a divadelní představení deváťáků v kosteleckém kulturním domě.
+                    </p>
+                    <button class="btn-link" onclick="alert('Záznam se načítá v archivu školy.')">▶ Přehrát vystoupení</button>
+                </div>
+
+                <div class="media-embed-box" style="aspect-ratio: auto; min-height: 220px; padding: 1.5rem;">
+                    <span class="media-badge" style="background: #15803d; border-color: #0f5127;">🌱 EKOŠKOLA</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; margin: 0.3rem 0;">Dokument: Zelená škola v pohybu</h4>
+                    <p style="font-size: 0.88rem; color: #94a3b8; margin-bottom: 1rem;">
+                        Reportáž školní televize o ptačích budkách, meteostanici na střeše a přírodních projektech.
+                    </p>
+                    <button class="btn-link" onclick="alert('Záznam se načítá v archivu školy.')">▶ Přehrát dokument</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB: KDE NÁS NAJDETE (ZAKOVSKYWEB.CZ) -->
+        <div id="kde-nas-najdete" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem;">📍 Kde nás najdete – Budovy ZŠ Kostelec n. O.</h3>
+                    <p class="doodle-font" style="font-size: 1.25rem; color: var(--brand-green);">Přehled všech 4 budov naší školy, adresy, kontakty a areál</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Zpět na přehled</button>
+            </div>
+
+            <div class="buildings-grid">
+                
+                <!-- BUDOVA 1 -->
+                <div class="building-card">
+                    <div>
+                        <div class="doodle-tape doodle-tape-green">🏛️ Hlavní budova (2. stupeň)</div>
+                        <h4 style="font-size: 1.2rem; color: var(--brand-green); margin: 0.5rem 0 0.4rem; font-weight: 800;">Palackého náměstí 45</h4>
+                        <p style="font-size: 0.88rem; color: var(--brand-orange); font-weight: 700; margin-bottom: 0.8rem;">517 41 Kostelec nad Orlicí</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                            Ředitelství školy, zástupci ředitele, ekonomický úsek a kanceláře školy. Učebny 6. až 9. ročníků, specializované IT učebny a velká tělocvična.
+                        </p>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+                        📞 Kancelář: +420 775 598 553<br>
+                        ✉️ E-mail: skola@zskostelec.cz
+                    </div>
+                </div>
+
+                <!-- BUDOVA 2 -->
+                <div class="building-card">
+                    <div>
+                        <div class="doodle-tape">🌱 1. Stupeň & Zahrada</div>
+                        <h4 style="font-size: 1.2rem; color: var(--brand-orange); margin: 0.5rem 0 0.4rem; font-weight: 800;">Komenského 80</h4>
+                        <p style="font-size: 0.88rem; color: var(--brand-green); font-weight: 700; margin-bottom: 0.8rem;">517 41 Kostelec nad Orlicí</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                            Kmenové třídy 1. stupně (1.–5. ročník), školní jídelna a výdejna obědů, školní zahrada s naučnou stezkou a online ptačí budkou.
+                        </p>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+                        🍽️ Školní jídelna: +420 775 598 558<br>
+                        🐦 Ptačí kamera 24/7 v provozu
+                    </div>
+                </div>
+
+                <!-- BUDOVA 3 -->
+                <div class="building-card">
+                    <div>
+                        <div class="doodle-tape doodle-tape-green">🛠️ Specializovaná výuka</div>
+                        <h4 style="font-size: 1.2rem; color: var(--brand-green); margin: 0.5rem 0 0.4rem; font-weight: 800;">Budova Drtinova</h4>
+                        <p style="font-size: 0.88rem; color: var(--brand-orange); font-weight: 700; margin-bottom: 0.8rem;">517 41 Kostelec nad Orlicí</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                            Odborné polytechnické dílny pro pracovní činnosti, cvičná žákovská kuchyňka, ateliér výtvarné výchovy a hudební pracoviště.
+                        </p>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+                        🔨 Školní dílny & Polytechnika<br>
+                        🎨 Výtvarný ateliér žáků
+                    </div>
+                </div>
+
+                <!-- BUDOVA 4 -->
+                <div class="building-card">
+                    <div>
+                        <div class="doodle-tape">🎲 Školní družina & Klub</div>
+                        <h4 style="font-size: 1.2rem; color: var(--brand-orange); margin: 0.5rem 0 0.4rem; font-weight: 800;">Erbenova – ŠD</h4>
+                        <p style="font-size: 0.88rem; color: var(--brand-green); font-weight: 700; margin-bottom: 0.8rem;">517 41 Kostelec nad Orlicí</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                            Budova školní družiny pro nejmenší žáky a školní klub pro odpolední volnočasové a zájmové kroužky, odpočinek a stolní hry.
+                        </p>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+                        🧸 Provoz ŠD: 6:00 – 16:30 hod.<br>
+                        📞 Vedoucí ŠD: +420 775 598 560
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- INTERAKTIVNÍ ODKAZ NA MAPU -->
+            <div style="background: var(--brand-green-soft); border: 2px dashed var(--brand-green); border-radius: 18px; padding: 1.4rem; margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h4 style="color: var(--brand-green); font-weight: 800; font-size: 1.15rem; margin-bottom: 0.3rem;">Kudy k nám nejlépe přijít?</h4>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0;">Škola leží přímo v historickém centru Kostelce nad Orlicí, jen 5 minut chůze z autobusového a vlakového nádraží.</p>
+                </div>
+                <a href="https://maps.google.com/?q=Palack%C3%A9ho+n%C3%A1m%C4%9Bst%C3%AD+45,+Kostelec+nad+Orlic%C3%AD" target="_blank" rel="noopener noreferrer" class="btn-link">
+                    🗺️ Otevřít trasu na Google Mapách ↗
+                </a>
+            </div>
+        </div>
+
+        <!-- TAB: NEKLIKAT! (LEGENDÁRNÍ ŽÁKOVSKÝ EASTER EGG Z ZAKOVSKYWEB.CZ) -->
+        <div id="neklikat" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.2rem; color: #dc2626;">🛑 PŘÍSNÝ ZÁKAZ KLIKÁNÍ!</h3>
+                    <p class="doodle-font" style="font-size: 1.3rem; color: #dc2626;">Varování: Tato sekce je určena výhradně těm nejposlušnějším žákům!</p>
+                </div>
+                <button class="btn-link btn-secondary" onclick="switchSection('uvod')">🏠 Bezpečný návrat na úvod</button>
+            </div>
+
+            <div class="neklikat-container" id="neklikatBox">
+                <div class="doodle-tape" style="background: #fee2e2; border-color: #dc2626; color: #b91c1c;">⚠️ NEBEZPEČNÁ ZÓNA ⚠️</div>
+                <h3 style="font-size: 1.8rem; font-weight: 800; color: #dc2626; margin: 1rem 0 0.5rem;">Opravdu na to červené tlačítko nesahej!</h3>
+                <p style="font-size: 1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem;">
+                    Na původním webu <strong>zakovskyweb.cz</strong> bylo toto tlačítko legendou. Kdo na něj kliknul, ten nesl následky... Dokážeš odolat zvědavosti?
+                </p>
+
+                <button class="neklikat-btn" id="btnNeklikat" onclick="handleNeklikatClick()">
+                    🛑 ROZHODNĚ NEKLIKAT! 🛑
+                </button>
+
+                <div id="neklikatCounterBadge" style="display: inline-block; background: #fee2e2; color: #991b1b; font-weight: 800; padding: 6px 16px; border-radius: 20px; font-size: 0.95rem; border: 1.5px solid #ef4444; margin-top: 1rem;">
+                    Počet neposlušných kliknutí: <span id="neklikatCount">0</span>
+                </div>
+
+                <div id="neklikatMessage" style="margin-top: 1.4rem; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); min-height: 2.2rem; transition: all 0.3s ease;">
+                    (Zatím jsi poslušný... nebo ne?)
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- PATIČKA -->
@@ -1770,12 +2530,108 @@ Příroda je hezká.</div>
                 btnText: 'Napsat vzkaz',
                 btnClass: 'btn-link',
                 keywords: 'schránka důvěry anonymní vzkaz podnět stížnost pochvala discord'
+            },
+            {
+                id: 'fotogalerie',
+                title: 'Fotogalerie',
+                icon: '📸',
+                section: 'fotogalerie',
+                desc: 'Fotky a momentky ze života školy, sportovních dnů, projektů i výletů.',
+                btnText: 'Prohlížet fotky',
+                btnClass: 'btn-link',
+                keywords: 'fotogalerie fotky akce fotografie obrázky život školy výlety 2024 2025'
+            },
+            {
+                id: 'sport-uspechy',
+                title: 'Sportovní úspěchy',
+                icon: '🏆',
+                section: 'sport-uspechy',
+                desc: 'Výsledky a medaile našich žáků v atletice, florbalu, přespolním běhu i gymnastice.',
+                btnText: 'Zobrazit úspěchy',
+                btnClass: 'btn-link btn-orange',
+                keywords: 'sport sportovní úspěchy florbal atletika běh pohár turnaj medaile'
+            },
+            {
+                id: 'souteze',
+                title: 'Úspěchy v soutěžích',
+                icon: '🎖️',
+                section: 'souteze',
+                desc: 'Olympiády z matematiky, dějepisu, českého jazyka i výtvarné a recitační soutěže.',
+                btnText: 'Zobrazit soutěže',
+                btnClass: 'btn-link',
+                keywords: 'soutěže olympiády pythagoriáda matematika dějepis jazyk diplom vědomostní'
+            },
+            {
+                id: 'prace-zaku',
+                title: 'Práce žáků ZŠ',
+                icon: '🎨',
+                section: 'prace-zaku',
+                desc: 'Výtvarná díla, linoryty, literární fejetony a originální žákovské projekty.',
+                btnText: 'Prohlédnout díla',
+                btnClass: 'btn-link btn-orange',
+                keywords: 'práce žáků výtvarná výchova kresby texty tvoření slohy komiksy projekty'
+            },
+            {
+                id: 'virtualni-prohlidka',
+                title: '360° Prohlídka',
+                icon: '🌐',
+                section: 'virtualni-prohlidka',
+                desc: 'Virtuální procházka školou – nahlédněte do vestibulu, tělocvičny a zahrady.',
+                btnText: 'Spustit prohlídku',
+                btnClass: 'btn-link',
+                keywords: '360 prohlídka virtuální kamera fotoaparát interiér tělocvična učebny'
+            },
+            {
+                id: 'video-memorial',
+                title: 'Video Memoriál',
+                icon: '🎬',
+                section: 'video-memorial',
+                desc: 'Pocta doc. Dr. V. Cífkovi a videoarchiv významných školních akcí a akademií.',
+                btnText: 'Přehrát videa',
+                btnClass: 'btn-link btn-orange',
+                keywords: 'video memoriál cífka václav cífka archiv záznamy běhy akademie'
+            },
+            {
+                id: 'kde-nas-najdete',
+                title: 'Kde nás najdete',
+                icon: '📍',
+                section: 'kde-nas-najdete',
+                desc: 'Přehled a mapa všech budov školy: Palackého náměstí, Komenského, Drtinova a ŠD.',
+                btnText: 'Zobrazit budovy',
+                btnClass: 'btn-link',
+                keywords: 'kde nás najdete budovy adresa palackého komenského drtinova erbenova družina mapa'
+            },
+            {
+                id: 'neklikat',
+                title: 'NEKLIKAT!',
+                icon: '🛑',
+                section: 'neklikat',
+                desc: 'Přísně střežená tajemná záložka. Opravdu na ni za žádných okolností neklikej!',
+                btnText: 'NEKLIKAT! ⚠️',
+                btnClass: 'btn-link btn-orange',
+                keywords: 'neklikat easter egg tajemství vtip zábava zákaz tlačítko'
             }
         ];
 
         // Výchozí rozložení
         const DEFAULT_NAV_IDS = ['skolni-tv', 'parlament'];
-        const DEFAULT_GRID_IDS = ['gutak', 'prazdniny', 'kalkulacka', 'ptaci-budka', 'skolni-meteostanice', 'basnicky', 'schranka'];
+        const DEFAULT_GRID_IDS = [
+            'gutak', 
+            'prazdniny', 
+            'kalkulacka', 
+            'fotogalerie',
+            'sport-uspechy',
+            'souteze',
+            'prace-zaku',
+            'virtualni-prohlidka',
+            'video-memorial',
+            'kde-nas-najdete',
+            'ptaci-budka', 
+            'skolni-meteostanice', 
+            'basnicky', 
+            'schranka',
+            'neklikat'
+        ];
 
         let navIds = [];
         let gridIds = [];
@@ -1789,6 +2645,13 @@ Příroda je hezká.</div>
             navIds = savedNav ? JSON.parse(savedNav) : DEFAULT_NAV_IDS;
             gridIds = savedGrid ? JSON.parse(savedGrid) : DEFAULT_GRID_IDS;
             customServices = savedCustom ? JSON.parse(savedCustom) : [];
+
+            // Zajištění, že nově přidané sekce ze zakovskyweb.cz se automaticky objeví v rozcestníku
+            DEFAULT_GRID_IDS.forEach(id => {
+                if (!navIds.includes(id) && !gridIds.includes(id)) {
+                    gridIds.push(id);
+                }
+            });
         } catch (e) {
             navIds = DEFAULT_NAV_IDS;
             gridIds = DEFAULT_GRID_IDS;
@@ -2739,6 +3602,156 @@ Příroda je hezká.</div>
                 openLoginModal();
             }
         })();
+
+        // ==========================================
+        // 12. POMOCNÉ FUNKCE PRO NOVÉ SEKCE ZE ZAKOVSKYWEB.CZ
+        // ==========================================
+
+        // FOTOGALERIE – FILTROVÁNÍ
+        function filterGallery(category, clickedBtn) {
+            const buttons = document.querySelectorAll('.gallery-filter-bar .filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            if (clickedBtn) clickedBtn.classList.add('active');
+
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // 360° VIRTUÁLNÍ PROHLÍDKA
+        const PANORAMA_ROOMS = {
+            'vestibul': {
+                title: 'Vstupní vestibul – Palackého náměstí',
+                desc: 'Historická budova školy s klenbami, nástěnkou školního parlamentu a hlavním schodištěm do učeben.',
+                bg: 'radial-gradient(circle at center, #1e3a5f 0%, #0f172a 100%)'
+            },
+            'telocvicna': {
+                title: 'Velká sportovní tělocvična (Palackého)',
+                desc: 'Místo konání florbalových turnajů, gymnastického víceboje a tréninků atletické přípravky.',
+                bg: 'radial-gradient(circle at center, #854d0e 0%, #451a03 100%)'
+            },
+            'it-ucebna': {
+                title: 'Počítačová učebna & IT lab',
+                desc: 'Moderní stanice pro výuku informatiky, robotiky, 3D modelování a tvorbu žákovského webu.',
+                bg: 'radial-gradient(circle at center, #065f46 0%, #022c22 100%)'
+            },
+            'zahrada': {
+                title: 'Školní zahrada & Altán (Komenského)',
+                desc: 'Zelená oáza s ptačí budkou, bylinkovým záhonem a venkovní učebnou pro přírodopis a ekoškoly.',
+                bg: 'radial-gradient(circle at center, #15803d 0%, #052e16 100%)'
+            }
+        };
+
+        let currentPanoramaRotation = 0;
+
+        function switchPanoramaRoom(roomId, clickedBtn) {
+            const pills = document.querySelectorAll('#roomNavPills .room-pill');
+            pills.forEach(p => p.classList.remove('active'));
+            if (clickedBtn) clickedBtn.classList.add('active');
+
+            const room = PANORAMA_ROOMS[roomId] || PANORAMA_ROOMS['vestibul'];
+            const titleEl = document.getElementById('panoramaTitle');
+            const descEl = document.getElementById('panoramaDesc');
+            const bgEl = document.getElementById('panoramaBg');
+
+            if (titleEl) titleEl.innerText = room.title;
+            if (descEl) descEl.innerText = room.desc;
+            if (bgEl) {
+                bgEl.style.background = room.bg;
+                currentPanoramaRotation = 0;
+                bgEl.style.transform = 'scale(1) translateX(0px)';
+            }
+        }
+
+        function rotatePanorama(deg) {
+            currentPanoramaRotation += deg;
+            const bgEl = document.getElementById('panoramaBg');
+            if (bgEl) {
+                bgEl.style.transform = `scale(1.1) translateX(${currentPanoramaRotation * 2}px)`;
+            }
+        }
+
+        function resetPanorama() {
+            currentPanoramaRotation = 0;
+            const bgEl = document.getElementById('panoramaBg');
+            if (bgEl) {
+                bgEl.style.transform = 'scale(1) translateX(0px)';
+            }
+        }
+
+        // NEKLIKAT! – HUMORNÁ ŽÁKOVSKÁ REAKCE (ZAKOVSKYWEB.CZ)
+        let neklikatCount = 0;
+        try {
+            neklikatCount = parseInt(localStorage.getItem('neklikat_click_count') || '0', 10);
+            if (isNaN(neklikatCount)) neklikatCount = 0;
+        } catch(e) {}
+
+        function updateNeklikatDisplay() {
+            const countEl = document.getElementById('neklikatCount');
+            if (countEl) countEl.innerText = neklikatCount;
+        }
+        updateNeklikatDisplay();
+
+        const NEKLIKAT_MESSAGES = [
+            "Říkali jsme ti NEKLIKAT! Proč jsi to zmáčkl? 🤨",
+            "Fakt neklikej! Pan školník už bere koště a jde na chodbu! 🪶🧹",
+            "Varování úrovně 2: Za další kliknutí dostaneš doučování z matiky! 📐😱",
+            "Právě jsi aktivoval tajný školní poplach! Žáci mají 10 minut pauzu navíc! 🔔🎉",
+            "Server Žákovského webu se přehřívá... Matyáš Fiala už běží do serverovny! 💻🏃‍♂️",
+            "Pozor, byla informována ředitelna! Hrozí ředitelská pochvala za extrémní zvědavost! 📜😂",
+            "Zkoušíš, jestli to tlačítko exploduje? Ještě pár kliknutí a uvidíš! 💥",
+            "Systém ZŠ detekoval mimořádného rebela. Byla ti udělena imaginární jednička s hvězdičkou! ⭐",
+            "Neklikej! Přijdou o oběd v jídelně všichni, kdo teď drží myš! 🍲🏃‍♀️",
+            "🏆 DOSAŽEN STATUS: HLAVNÍ NIKÝM NEKONTROLOVATELNÝ KLIKAČ ŠKOLY! Gratulujeme k rekordu! 🎉🥳"
+        ];
+
+        function playFunnyAudio() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(260 + (neklikatCount % 10) * 45, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(700, ctx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.2);
+            } catch(e) {}
+        }
+
+        function handleNeklikatClick() {
+            neklikatCount++;
+            try { localStorage.setItem('neklikat_click_count', String(neklikatCount)); } catch(e) {}
+            updateNeklikatDisplay();
+
+            playFunnyAudio();
+
+            const box = document.getElementById('neklikatBox');
+            if (box) {
+                box.classList.remove('shake-screen');
+                void box.offsetWidth; // Force reflow
+                box.classList.add('shake-screen');
+            }
+
+            const msgEl = document.getElementById('neklikatMessage');
+            if (msgEl) {
+                const msgIndex = Math.min(neklikatCount - 1, NEKLIKAT_MESSAGES.length - 1);
+                msgEl.innerText = NEKLIKAT_MESSAGES[msgIndex];
+                msgEl.style.color = neklikatCount > 5 ? '#dc2626' : 'var(--brand-orange)';
+                msgEl.style.transform = 'scale(1.08)';
+                setTimeout(() => { if (msgEl) msgEl.style.transform = 'scale(1)'; }, 200);
+            }
+        }
 
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
