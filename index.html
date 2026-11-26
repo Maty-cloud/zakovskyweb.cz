@@ -397,12 +397,25 @@
             flex-wrap: wrap; gap: 0.8rem; 
         }
         .top-bar-info { display: flex; gap: 1.2rem; flex-wrap: wrap; }
-        .top-bar-links { display: flex; gap: 1.2rem; }
+        .top-bar-links { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
         .top-bar-links a { 
             color: #ffffff; text-decoration: none; font-weight: 600; 
             transition: var(--transition); opacity: 0.95;
         }
         .top-bar-links a:hover { opacity: 1; text-decoration: underline; color: #86efac; }
+        .top-bar-links a.highlight-link {
+            background: var(--brand-orange);
+            color: #ffffff !important;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none !important;
+            box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+        }
+        .top-bar-links a.highlight-link:hover {
+            background: var(--brand-orange-hover);
+            transform: scale(1.05);
+        }
 
         /* HEADER */
         header { 
@@ -1120,6 +1133,7 @@
             <div class="top-bar-links">
                 <a href="https://www.zskostelec.cz" target="_blank" rel="noopener noreferrer">Oficiální web školy</a>
                 <a href="https://zsgjkno.edupage.org/" target="_blank" rel="noopener noreferrer">EduPage & Obědy</a>
+                <a href="https://www.zakovskyweb.cz/" target="_blank" rel="noopener noreferrer" class="highlight-link">🌐 Stará stránka (zakovskyweb.cz) ↗</a>
             </div>
         </div>
     </div>
@@ -1173,6 +1187,11 @@
                 <div class="doodle-tape doodle-tape-green">🌱 Školní rok 2026/2027</div>
                 <h2>Vítejte na Žákovském webu ZŠ Gutha Jarkovského</h2>
                 <p>Studentský rozcestník pro naši školu. Najdete zde aktuální číslo časopisu Guťák ke stažení, živou kameru z ptačí budky, básničky pana školníka, termíny prázdnin i schránku důvěry.</p>
+                <div style="margin-top: 1.4rem; display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                    <a href="https://www.zakovskyweb.cz/" target="_blank" rel="noopener noreferrer" class="btn-link btn-orange" style="box-shadow: 3px 3px 0 rgba(0,0,0,0.35);">
+                        🌐 Přejít na starou stránku (zakovskyweb.cz) ↗
+                    </a>
+                </div>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1.2rem;">
@@ -1978,7 +1997,7 @@ V pátek je tu konečně rodičovský ples</div>
                 <!-- FOTO 6 -->
                 <div class="polaroid-card searchable-item gallery-item" data-category="skola" data-keywords="vánoce dílny akademie besídka stromeček">
                     <div class="polaroid-img-wrapper">
-                        <img class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffe4e6'/><text x='200' y='140' font-size='48' text-anchor='middle'>🎄</text><text x='200' y='190' font-size='16' font-weight='bold' fill='%23be123c' text-anchor='middle'>Vánoční dílny a jarmark</text></svg>" alt="Vánoční jarmark">
+                        <img class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffe4e6'/><text x='200' y='140' font-size='48' text-anchor='middle'>🎄</text><text x='200' y='190' font-size='16' font-weight='bold' fill='%23be123c' text-anchor='middle'>Vánoční jarmark & Zpívání na schodech</text></svg>" alt="Vánoční jarmark">
                         <span class="polaroid-tag">Prosinec</span>
                     </div>
                     <div class="polaroid-desc">
@@ -1993,10 +2012,10 @@ V pátek je tu konečně rodičovský ples</div>
             <div style="background: var(--brand-green-soft); border: 2px dashed var(--brand-green); border-radius: 18px; padding: 1.4rem; margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
                 <div>
                     <h4 style="color: var(--brand-green); font-weight: 800; font-size: 1.15rem; margin-bottom: 0.3rem;">Chcete vidět kompletní fotogalerie ze všech školních let?</h4>
-                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0;">Všechny archivy a původní alba jsou dostupné také přímo na našem sesterském webu.</p>
+                    <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0;">Všechny archivy a původní alba jsou dostupné také přímo na naší staré stránce.</p>
                 </div>
                 <a href="https://www.zakovskyweb.cz" target="_blank" rel="noopener noreferrer" class="btn-link">
-                    🌐 Otevřít zakovskyweb.cz ↗
+                    🌐 Otevřít starou stránku zakovskyweb.cz ↗
                 </a>
             </div>
         </div>
@@ -2432,7 +2451,7 @@ V pátek je tu konečně rodičovský ples</div>
     <footer>
         <p>&copy; Žákovský web ZŠ PhDr. J. S. Gutha-Jarkovského, Kostelec nad Orlicí. Školní rok 2026/2027.</p>
         <p style="font-size: 0.88rem; opacity: 0.95;">
-            Vytvořeno žáky školy • Doodle Edition ✦ | <a href="https://www.zskostelec.cz" target="_blank" rel="noopener noreferrer">Oficiální web školy</a> | <a href="https://zsgjkno.edupage.org/" target="_blank" rel="noopener noreferrer">EduPage</a>
+            Vytvořeno žáky školy • Doodle Edition ✦ | <a href="https://www.zskostelec.cz" target="_blank" rel="noopener noreferrer">Oficiální web školy</a> | <a href="https://zsgjkno.edupage.org/" target="_blank" rel="noopener noreferrer">EduPage</a> | <a href="https://www.zakovskyweb.cz/" target="_blank" rel="noopener noreferrer">Stará stránka (zakovskyweb.cz) ↗</a>
         </p>
     </footer>
 
@@ -2470,6 +2489,17 @@ V pátek je tu konečně rodičovský ples</div>
                 btnText: 'Zobrazit Guťák 📥',
                 btnClass: 'btn-link',
                 keywords: 'guťák časopis školní noviny články pdf pub čtení redakce říjen'
+            },
+            {
+                id: 'stary-web',
+                title: 'Stará stránka',
+                icon: '🌐',
+                section: 'stary-web',
+                desc: 'Archiv původního žákovského webu zakovskyweb.cz se staršími články, fotografiemi a historií.',
+                btnText: 'Přejít na starý web ↗',
+                btnClass: 'btn-link btn-orange',
+                url: 'https://www.zakovskyweb.cz/',
+                keywords: 'stará stránka starý web původní zakovskyweb archiv wordpress'
             },
             {
                 id: 'prazdniny',
@@ -2617,6 +2647,7 @@ V pátek je tu konečně rodičovský ples</div>
         const DEFAULT_NAV_IDS = ['skolni-tv', 'parlament'];
         const DEFAULT_GRID_IDS = [
             'gutak', 
+            'stary-web',
             'prazdniny', 
             'kalkulacka', 
             'fotogalerie',
@@ -2714,7 +2745,7 @@ V pátek je tu konečně rodičovský ples</div>
                     const li = document.createElement('li');
                     li.className = 'nav-item-wrapper';
                     li.innerHTML = `
-                        <a data-section="${service.section}" onclick="switchSection('${service.section}')">
+                        <a data-section="${service.section}" onclick="${service.url ? `window.open('${service.url}', '_blank')` : `switchSection('${service.section}')`}">
                             ${service.icon} ${service.title}
                         </a>
                         <button class="admin-nav-move-btn" onclick="moveToGrid('${service.id}')" title="Přesunout '${service.title}' dolů do rozcestníku">⬇️</button>
@@ -2741,7 +2772,7 @@ V pátek je tu konečně rodičovský ples</div>
                             <p>${service.desc}</p>
                         </div>
                         <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:1.1rem;">
-                            <button class="${service.btnClass || 'btn-link'}" onclick="switchSection('${service.section}')">
+                            <button class="${service.btnClass || 'btn-link'}" onclick="${service.url ? `window.open('${service.url}', '_blank')` : `switchSection('${service.section}')`}">
                                 ${service.btnText || 'Zobrazit'}
                             </button>
                             <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
