@@ -3893,12 +3893,15 @@ V pátek je tu konečně rodičovský ples</div>
             }
         }
 
-        // NEKLIKAT! – HUMORNÁ ŽÁKOVSKÁ REAKCE (ZAKOVSKYWEB.CZ)
+        // NEKLIKAT! – HUMORNÁ ŽÁKOVSKÁ REAKCE & NÁHODNÝ JUMPSCARE (MAX DO 30 KLIKŮ)
         let neklikatCount = 0;
-        try {
-            neklikatCount = parseInt(localStorage.getItem('neklikat_click_count') || '0', 10);
-            if (isNaN(neklikatCount)) neklikatCount = 0;
-        } catch(e) {}
+        try { localStorage.removeItem('neklikat_click_count'); } catch(e) {}
+
+        // Funkce pro generování náhodného cíle (náhodně mezi 3 až 30 kliknutími)
+        function getRandomJumpscareTarget() {
+            return Math.floor(Math.random() * (30 - 3 + 1)) + 3;
+        }
+        let jumpscareTarget = getRandomJumpscareTarget();
 
         function updateNeklikatDisplay() {
             const countEl = document.getElementById('neklikatCount');
@@ -3940,15 +3943,22 @@ V pátek je tu konečně rodičovský ples</div>
 
         function handleNeklikatClick() {
             neklikatCount++;
-            try { localStorage.setItem('neklikat_click_count', String(neklikatCount)); } catch(e) {}
             updateNeklikatDisplay();
 
-            // KONTROLA NA 34. KLIKNUTÍ -> JUMPSCARE!
-            if (neklikatCount === 34 || (neklikatCount > 34 && neklikatCount % 34 === 0)) {
-                triggerJumpscare();
+            // KONTROLA NA NÁHODNÝ JUMPSCARE (POKAŽDÉ NÁHODNĚ V ROZMEZÍ MAX 30 KLIKŮ)!
+            if (neklikatCount >= jumpscareTarget) {
+                const triggeredOn = neklikatCount;
+                triggerJumpscare(triggeredOn);
+
+                // RESET HISTORIE NA 0 A VYGENEROVÁNÍ NOVÉHO NÁHODNÉHO CÍLE
+                neklikatCount = 0;
+                jumpscareTarget = getRandomJumpscareTarget();
+                try { localStorage.removeItem('neklikat_click_count'); } catch(e) {}
+                updateNeklikatDisplay();
+
                 const msgEl = document.getElementById('neklikatMessage');
                 if (msgEl) {
-                    msgEl.innerText = "💀 BAF! 34. KLIKNUTÍ! AKTIVOVÁN KONEČNÝ JUMPSCARE! 😱👻💥";
+                    msgEl.innerText = "💀 BAF! JUMPSCARE! Historie byla vymazána a počítadlo se resetovalo na 0! 😂";
                     msgEl.style.color = "#dc2626";
                     msgEl.style.fontWeight = "800";
                 }
@@ -3966,7 +3976,7 @@ V pátek je tu konečně rodičovský ples</div>
 
             const msgEl = document.getElementById('neklikatMessage');
             if (msgEl) {
-                const msgIndex = Math.min(neklikatCount - 1, NEKLIKAT_MESSAGES.length - 1);
+                const msgIndex = (neklikatCount - 1) % NEKLIKAT_MESSAGES.length;
                 msgEl.innerText = NEKLIKAT_MESSAGES[msgIndex];
                 msgEl.style.color = neklikatCount > 5 ? '#dc2626' : 'var(--brand-orange)';
                 msgEl.style.transform = 'scale(1.08)';
@@ -4044,7 +4054,7 @@ V pátek je tu konečně rodičovský ples</div>
         }
 
         let jumpscareTimer = null;
-        function triggerJumpscare() {
+        function triggerJumpscare(triggeredOn) {
             playJumpscareSound();
 
             const overlay = document.getElementById('jumpscareOverlay');
@@ -4065,8 +4075,9 @@ V pátek je tu konečně rodičovský ples</div>
             if (jumpscareTimer) clearTimeout(jumpscareTimer);
             jumpscareTimer = setTimeout(() => {
                 overlay.className = 'jumpscare-overlay jumpscare-calm';
-                if (titleEl) titleEl.innerHTML = '💀 34. KLIKNUTÍ: BAF! 👻';
-                if (descEl) descEl.innerHTML = 'Říkali jsme ti přece <strong>NEKLIKAT!</strong><br>Žiješ ještě? Málem ti vyletělo srdce z těla, co? 😂';
+                if (titleEl) titleEl.innerHTML = '💀 BAF! JUMPSCARE! 👻';
+                const countText = triggeredOn ? ` (Tentokrát to bouchlo na ${triggeredOn}. kliknutí!)` : '';
+                if (descEl) descEl.innerHTML = `Říkali jsme ti přece <strong>NEKLIKAT!</strong>${countText}<br>Historie se resetovala zpět na 0 – troufneš si na další náhodné kolo? 😂`;
                 if (actionsEl) actionsEl.style.display = 'flex';
             }, 2400);
         }
@@ -4095,11 +4106,12 @@ V pátek je tu konečně rodičovský ples</div>
 
         function resetNeklikatCounter() {
             neklikatCount = 0;
-            try { localStorage.setItem('neklikat_click_count', '0'); } catch(e) {}
+            jumpscareTarget = getRandomJumpscareTarget();
+            try { localStorage.removeItem('neklikat_click_count'); } catch(e) {}
             updateNeklikatDisplay();
             const msgEl = document.getElementById('neklikatMessage');
             if (msgEl) {
-                msgEl.innerText = '(Počítadlo bylo resetováno na 0. Troufneš si znovu na 34?)';
+                msgEl.innerText = '(Historie byla resetována na 0. Připravena nová náhodná past do max 30 kliků!)';
                 msgEl.style.color = 'var(--text-muted)';
             }
             closeJumpscare();
